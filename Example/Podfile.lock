@@ -1,0 +1,27 @@
+PODS:
+  - APIKit (0.1.0)
+  - Nimble (7.3.4)
+  - Quick (1.2.0)
+
+DEPENDENCIES:
+  - APIKit (from `../`)
+  - Nimble (~> 7.0)
+  - Quick (~> 1.2.0)
+
+SPEC REPOS:
+  https://cdn.cocoapods.org/:
+    - Nimble
+    - Quick
+
+EXTERNAL SOURCES:
+  APIKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  APIKit: e1e1f4c620dda2333346ac584005156c54d68321
+  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+
+PODFILE CHECKSUM: cd920e5d353aaf5837c1dc02c043dba85b478690
+
+COCOAPODS: 1.8.4
