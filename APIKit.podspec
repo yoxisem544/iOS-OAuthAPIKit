@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.framework  = "Foundation"
-    ss.source_files  = "APIKit/Classes/Core", "APIKit/Classes/Plugins"
+    ss.source_files  = "APIKit/Classes/Core/**/*"
     s.dependency 'Alamofire', '~> 4.9'
     s.dependency 'Moya', '~> 13.0'
     s.dependency 'ObjectMapper', '~> 3.5'
