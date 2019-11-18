@@ -39,9 +39,9 @@ protocol MappableResponse {
 final public class API {
 
     public enum NetworkClientError: Error {
-        case clientSideError(statusCode: Int, errorMessage: ServerErrorMessage?)
-        case serverSideError(statusCode: Int, errorMessage: ServerErrorMessage?)
-        case undefinedError
+        case clientSideError(statusCode: Int, errorResponse: Response)
+        case serverSideError(statusCode: Int, errorResponse: Response)
+        case undefinedError(statusCode: Int, errorResponse: Response)
     }
 
     public struct NetworkClient {
@@ -56,14 +56,13 @@ final public class API {
         let provider: MoyaProvider<MultiTarget>
 
         func handleErrorResponse(_ r: Response) -> API.NetworkClientError {
-            let message = try? r.map(ServerErrorMessage.self)
             switch r.statusCode {
             case 400...499:
-                return API.NetworkClientError.clientSideError(statusCode: r.statusCode, errorMessage: message)
+                return API.NetworkClientError.clientSideError(statusCode: r.statusCode, errorResponse: r)
             case 500...599:
-                return API.NetworkClientError.serverSideError(statusCode: r.statusCode, errorMessage: message)
+                return API.NetworkClientError.serverSideError(statusCode: r.statusCode, errorResponse: r)
             default:
-                return API.NetworkClientError.undefinedError
+                return API.NetworkClientError.undefinedError(statusCode: r.statusCode, errorResponse: r)
             }
         }
 
@@ -78,15 +77,11 @@ final public class API {
 
     /// Default api client
     public static let shared: NetworkClient = {
-        let tokenRefreshPlugin = TokenRefreshingPlugin()
         let plugins: [PluginType] = [
             NetworkTrafficPlugin.init(indicatorType: .start, .done),
-            XAuthHeaderInjectingPlugin(),
-            tokenRefreshPlugin
         ]
         let provider = MoyaProvider<MultiTarget>(plugins: plugins)
         let client = NetworkClient(provider: provider)
-        tokenRefreshPlugin.networkClientRef = client
         return client
     }()
 

@@ -50,4 +50,10 @@ Pod::Spec.new do |s|
     s.dependency 'PromiseKit', '~> 6.12'
     s.dependency 'SwiftyJSON', '~> 5.0'
   end
+
+  s.subspec "RxSwift" do |ss|
+    ss.source_files = "APIKit/Classes/RxSwiftExtensions/**/*"
+    ss.dependency "APIKit/Core"
+    ss.dependency "Moya/RxSwift"
+  end
 end

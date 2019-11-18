@@ -10,12 +10,11 @@ import Moya
 import PromiseKit
 import SwiftyJSON
 
-protocol TokenRefreshingClient {}
 protocol TokenRefreshingRequest {}
 
 fileprivate let tokenRefreshQueue = DispatchQueue(label: "io.api.network_client.token_refresh_queue")
 
-extension API.NetworkClient : TokenRefreshingClient {
+extension API.NetworkClient {
 
     func request<Reqeust: TargetType & TokenRefreshingRequest>(_ request: Reqeust) -> Promise<JSON> {
         return perform(request, on: tokenRefreshQueue)
