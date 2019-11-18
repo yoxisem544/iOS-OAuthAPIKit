@@ -11,9 +11,17 @@ import APIKit
 extension SampleReqeust {
     struct Ya {
         struct GetYA: SampleRequestType, XAuthHeaderInjecting {
-            var path: String { "yo" }
+            var path: String { "/get" }
             var method: Method { .get }
-            var task: Task { .requestPlain }
+            var task: Task { .requestParameters(parameters: ["path": "ya/yo"], encoding: URLEncoding.default) }
+        }
+    }
+
+    struct Auth {
+        struct RefreshAccessToken: SampleRequestType, AuthRequest {
+            var path: String { "/get" }
+            var method: Method { .get }
+            var task: Task { .requestParameters(parameters: ["path": "refresh"], encoding: URLEncoding.default) }
         }
     }
 }

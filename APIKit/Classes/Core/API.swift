@@ -15,6 +15,8 @@ import ObjectMapper
 
 public typealias Method = HTTPMethod
 public typealias Task = Moya.Task
+public typealias URLEncoding = Moya.URLEncoding
+public typealias JSONEncoding = Moya.JSONEncoding
 
 extension String {
     var urlEscaped: String {

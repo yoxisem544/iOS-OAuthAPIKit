@@ -44,11 +44,11 @@ extension API.NetworkClient {
         }
     }
 
-    func request<Request: TargetType & DecodableResponse>(_ request: Request, atKeyPath path: String? = nil, failsOnEmptyData: Bool = true) -> Promise<Request.ResponseType> {
+    public func request<Request: TargetType & DecodableResponse>(_ request: Request, atKeyPath path: String? = nil, failsOnEmptyData: Bool = true) -> Promise<Request.ResponseType> {
         return perform(request, on: requestQueue, atKeyPath: path, failsOnEmptyData: failsOnEmptyData)
     }
 
-    func request<Request: TargetType & DecodableResponse>(_ r: Request) -> Promise<Request.ResponseType> {
+    public func request<Request: TargetType & DecodableResponse>(_ r: Request) -> Promise<Request.ResponseType> {
         return request(r, atKeyPath: r.jsonDecodingEntryPath, failsOnEmptyData: true)
     }
 
@@ -82,7 +82,7 @@ extension API.NetworkClient {
         }
     }
 
-    func request<R: TargetType & MappableResponse>(_ request: R) -> Promise<R.ResponseType> {
+    public func request<R: TargetType & MappableResponse>(_ request: R) -> Promise<R.ResponseType> {
         return perform(request, on: requestQueue)
     }
 

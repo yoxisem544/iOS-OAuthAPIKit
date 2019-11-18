@@ -22,19 +22,19 @@ extension RetryableRquest {
 
 extension API.NetworkClient {
 
-    func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
+    public func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
         return attempt(maximumRetryCount: retryingRequest.retryCount, delayBeforeRetry: retryingRequest.retryInterval, {
             return self.perform(retryingRequest, on: self.requestQueue)
         })
     }
 
-    func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
+    public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
         return attempt(maximumRetryCount: retryingRequest.retryCount, delayBeforeRetry: retryingRequest.retryInterval, {
             return self.perform(retryingRequest, on: self.requestQueue)
         })
     }
 
-    func request<Request: TargetType & MappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
+    public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
         return attempt(maximumRetryCount: retryingRequest.retryCount, delayBeforeRetry: retryingRequest.retryInterval, {
             return self.perform(retryingRequest, on: self.requestQueue)
         })

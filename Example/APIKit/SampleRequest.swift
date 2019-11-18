@@ -22,6 +22,14 @@ public struct SampleReqeust {}
 
 extension API {
     public static let sharedd: NetworkClient = {
+        let r = RefreshTokenPlugin(
+            triggerRefreshClosure: { response in
+                return true
+            },
+            refreshRequest: SampleReqeust.Auth.RefreshAccessToken(),
+            successToRefreshClosure: { json in },
+            failToRefreshClosure: { error in }
+        )
         let xAuthHeaderInjectingPlugin = XAuthHeaderInjectingPlugin(xAuthHeaderClosure: { target in
             return API.config.xAuthToken
         })
@@ -31,21 +39,23 @@ extension API {
         ]
         let provider = MoyaProvider<MultiTarget>(plugins: plugins)
         let client = NetworkClient(provider: provider)
+        r.networkClientRef = client
         return client
     }()
 }
 
 extension API {
-    static var config: Config = .staging_04
+    static var config: Config = .bin
 
     enum Config {
-        case `default`, staging, staging_04
+        case `default`, staging, staging_04, bin
 
         var baseURL: URL {
             switch self {
             case .default: return URL(string: "https://google.com")!
             case .staging: return URL(string: "https://staging.google.com")!
             case .staging_04: return URL(string: "https://staging-04.google.com")!
+            case .bin: return URL(string: "http://httpbin.org/")!
             }
         }
 
@@ -54,6 +64,7 @@ extension API {
             case .default: return "ya"
             case .staging: return "ya-staging-2"
             case .staging_04: return "ya-staging-04"
+            case .bin: return "bb-bin"
             }
         }
     }
