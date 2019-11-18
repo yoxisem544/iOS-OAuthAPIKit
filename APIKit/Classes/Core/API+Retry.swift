@@ -6,39 +6,38 @@
 //  Copyright © 2019 KKday. All rights reserved.
 //
 
+import Foundation
 import Moya
 import PromiseKit
 import SwiftyJSON
 
 public protocol RetryableRquest {
-    var retryInterval: DispatchTimeInterval { get }
-    var retryCount: Int { get }
+    var retryBehavior: RepeatBehavior { get }
 }
 
 extension RetryableRquest {
-    var retryInterval: DispatchTimeInterval { return .seconds(2) }
-    var retryCount: Int { return 3 }
+    /// Default to general delay with retry count 3 times, each retry with 2 seconds interval.
+    var retryBehavior: RepeatBehavior { return .delayed(maxCount: 3, time: 2) }
 }
 
 extension API.NetworkClient {
 
     public func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
-        return attempt(maximumRetryCount: retryingRequest.retryCount, delayBeforeRetry: retryingRequest.retryInterval, {
+        return attempt(retryingRequest.retryBehavior, {
             return self.perform(retryingRequest, on: self.requestQueue)
         })
     }
 
     public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attempt(maximumRetryCount: retryingRequest.retryCount, delayBeforeRetry: retryingRequest.retryInterval, {
+        return attempt(retryingRequest.retryBehavior, {
             return self.perform(retryingRequest, on: self.requestQueue)
         })
     }
 
     public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attempt(maximumRetryCount: retryingRequest.retryCount, delayBeforeRetry: retryingRequest.retryInterval, {
+        return attempt(retryingRequest.retryBehavior, {
             return self.perform(retryingRequest, on: self.requestQueue)
         })
     }
 
 }
-

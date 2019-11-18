@@ -18,7 +18,7 @@ extension Reactive where Base == API.NetworkClient {
     // conform DecodableResponseTargetType 的意義在此，
     // 因為我們已經先定好 ResponseType 是什麼了，
     // 儘管 request 不知道確定是什麼型態，但一定可以被 JSONDecoder 解析。
-    func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Single<Request.ResponseType> {
+    public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget.init(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
             .filterSuccessfulStatusCodes()
@@ -26,7 +26,7 @@ extension Reactive where Base == API.NetworkClient {
     }
 
 
-    func request<Request: TargetType>(_ request: Request, failsOnEmptyData: Bool = false) -> Single<Any> {
+    public func request<Request: TargetType>(_ request: Request, failsOnEmptyData: Bool = false) -> Single<Any> {
         let target = MultiTarget.init(request)
         return base.provider.rx.request(target)
             .filterSuccessfulStatusCodes()
@@ -37,7 +37,7 @@ extension Reactive where Base == API.NetworkClient {
 
 extension Reactive where Base == API.NetworkClient {
 
-    func request<Request: TargetType & MappableResponse>(_ request: Request) -> Single<Request.ResponseType> {
+    public func request<Request: TargetType & MappableResponse>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget.init(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
             .filterSuccessfulStatusCodes()
@@ -48,10 +48,10 @@ extension Reactive where Base == API.NetworkClient {
 
 extension Reactive where Base == API.NetworkClient {
 
-    func request<Request: TargetType & MappableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
+    public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget.init(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
-            .retry(RepeatBehavior.delayed(maxCount: UInt(request.retryCount), time: request.retryInterval.toDoubleValue()))
+            .retry(request.retryBehavior)
             .filterSuccessfulStatusCodes()
             .map(Request.ResponseType.self)
     }
