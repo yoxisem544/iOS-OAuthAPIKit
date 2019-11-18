@@ -16,16 +16,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        API.sharedd.blockRequestQueue()
+//        API.sharedd.blockRequestQueue()
 
-        API.sharedd.request(SampleReqeust.Auth.RefreshAccessToken())
-//        API.sharedd.request(SampleReqeust.Ya.GetYA())
+//        API.sharedd.request(SampleReqeust.Auth.RefreshAccessToken())
+        API.sharedd.request(SampleReqeust.Ya.GetYA())
             .done({ json in
                 print(json)
             })
             .catch({ e in
                 print(e)
             })
+
     }
 
     override func didReceiveMemoryWarning() {

@@ -36,6 +36,7 @@ extension API {
         let plugins: [PluginType] = [
             NetworkTrafficPlugin.init(indicatorType: .start, .done),
             xAuthHeaderInjectingPlugin,
+            r
         ]
         let provider = MoyaProvider<MultiTarget>(plugins: plugins)
         let client = NetworkClient(provider: provider)

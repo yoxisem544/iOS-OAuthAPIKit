@@ -9,7 +9,7 @@ import Moya
 import Result
 import SwiftyJSON
 
-public class RefreshTokenPlugin<Target: TargetType>: PluginType {
+public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
 
     public var networkClientRef: API.NetworkClient?
     private let triggerRefreshClosure: ((Response) -> Bool)
@@ -36,6 +36,8 @@ public class RefreshTokenPlugin<Target: TargetType>: PluginType {
     }
 
     public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
+        guard !(target is AuthRequest) else { return } // ignore auth request
+
         switch result {
         case let .success(response):
             if triggerRefreshClosure(response) {
