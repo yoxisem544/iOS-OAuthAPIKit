@@ -14,6 +14,7 @@ import SwiftyJSON
 import ObjectMapper
 
 public typealias Method = HTTPMethod
+public typealias Task = Moya.Task
 
 extension String {
     var urlEscaped: String {
@@ -22,7 +23,7 @@ extension String {
 }
 
 // 定義一個 protocol 需要預先指定 response 的 type
-protocol DecodableResponse {
+public protocol DecodableResponse {
     associatedtype ResponseType: Decodable
     var jsonDecodingEntryPath: String? { get }
 }
@@ -32,7 +33,7 @@ extension DecodableResponse {
     var jsonDecodingEntryPath: String? { return nil }
 }
 
-protocol MappableResponse {
+public protocol MappableResponse {
     associatedtype ResponseType: BaseMappable
 }
 
@@ -50,7 +51,7 @@ final public class API {
         internal let requestQueue = DispatchQueue(label: "io.api.network_client.request_queue")
 
         // MARK: Initialization
-        init(provider: MoyaProvider<MultiTarget>) {
+        public init(provider: MoyaProvider<MultiTarget>) {
             self.provider = provider
         }
         let provider: MoyaProvider<MultiTarget>
@@ -93,7 +94,7 @@ final public class API {
 // MARK: - General Decoding with SwiftyJSON
 extension API.NetworkClient {
 
-    func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
+    public func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
         return perform(request, on: requestQueue)
     }
 

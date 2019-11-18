@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import APIKit
+import PromiseKit
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        API.sharedd.request(SampleReqeust.Ya.GetYA())
+            .done({ json in
+                print(json)
+            })
+            .catch({ e in
+                print(e)
+            })
     }
 
     override func didReceiveMemoryWarning() {
