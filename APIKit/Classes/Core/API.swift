@@ -18,12 +18,6 @@ public typealias Task = Moya.Task
 public typealias URLEncoding = Moya.URLEncoding
 public typealias JSONEncoding = Moya.JSONEncoding
 
-extension String {
-    var urlEscaped: String {
-        return addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-    }
-}
-
 // 定義一個 protocol 需要預先指定 response 的 type
 public protocol DecodableResponse {
     associatedtype ResponseType: Decodable

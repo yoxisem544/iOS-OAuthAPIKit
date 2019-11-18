@@ -1,15 +1,16 @@
 PODS:
   - Alamofire (4.9.1)
-  - APIKit (0.1.0):
+  - APIKit/Core (0.1.0):
     - Alamofire (~> 4.9)
-    - APIKit/Core (= 0.1.0)
     - Moya (~> 13.0)
     - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - APIKit/Core (0.1.0):
+  - APIKit/RxSwift (0.1.0):
     - Alamofire (~> 4.9)
+    - APIKit/Core
     - Moya (~> 13.0)
+    - Moya/RxSwift
     - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
@@ -18,6 +19,9 @@ PODS:
   - Moya/Core (13.0.1):
     - Alamofire (~> 4.1)
     - Result (~> 4.1)
+  - Moya/RxSwift (13.0.1):
+    - Moya/Core
+    - RxSwift (~> 4.0)
   - Nimble (8.0.4)
   - ObjectMapper (3.5.1)
   - PromiseKit (6.12.0):
@@ -31,10 +35,11 @@ PODS:
     - PromiseKit/CorePromise
   - Quick (2.2.0)
   - Result (4.1.0)
+  - RxSwift (4.5.0)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
-  - APIKit (from `../`)
+  - APIKit/RxSwift (from `../`)
   - Nimble (~> 8.0)
   - Quick (~> 2.0)
 
@@ -47,6 +52,7 @@ SPEC REPOS:
     - PromiseKit
     - Quick
     - Result
+    - RxSwift
     - SwiftyJSON
 
 EXTERNAL SOURCES:
@@ -62,8 +68,9 @@ SPEC CHECKSUMS:
   PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: d747667feb64d6c7206a1fffb7570c2061411165
+PODFILE CHECKSUM: 7f521659164b5c3aa616154cab1facbd2cef1f63
 
 COCOAPODS: 1.8.4

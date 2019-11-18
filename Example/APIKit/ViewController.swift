@@ -19,6 +19,7 @@ class ViewController: UIViewController {
 //        API.sharedd.blockRequestQueue()
 
 //        API.sharedd.request(SampleReqeust.Auth.RefreshAccessToken())
+        
         API.sharedd.request(SampleReqeust.Ya.GetYA())
             .done({ json in
                 print(json)
