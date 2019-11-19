@@ -15,7 +15,7 @@ public protocol RetryableRquest {
     var retryBehavior: RepeatBehavior { get }
 }
 
-extension RetryableRquest {
+public extension RetryableRquest {
     /// Default to general delay with retry count 3 times, each retry with 2 seconds interval.
     var retryBehavior: RepeatBehavior { return .delayed(maxCount: 3, time: 2) }
 }

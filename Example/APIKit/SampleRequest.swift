@@ -20,6 +20,8 @@ extension SampleRequestType {
 
 public struct SampleReqeust {}
 
+var accessToken: String = "Not_change_yet"
+
 extension API {
     public static let sharedd: NetworkClient = {
         let r = RefreshTokenPlugin(
@@ -30,7 +32,7 @@ extension API {
                 return true
             },
             refreshRequest: SampleReqeust.Auth.RefreshAccessToken(),
-            successToRefreshClosure: { json in },
+            successToRefreshClosure: { json in accessToken += "after refresh" },
             failToRefreshClosure: { error in }
         )
         let xAuthHeaderInjectingPlugin = XAuthHeaderInjectingPlugin(xAuthHeaderClosure: { target in
@@ -39,7 +41,10 @@ extension API {
         let plugins: [PluginType] = [
             NetworkTrafficPlugin.init(indicatorType: .start, .done),
             xAuthHeaderInjectingPlugin,
-            r
+            r,
+            AccessTokenProvidingPlugin(tokenClosure: {
+                return accessToken
+            })
         ]
         let provider = MoyaProvider<MultiTarget>(plugins: plugins)
         let client = NetworkClient(provider: provider)
