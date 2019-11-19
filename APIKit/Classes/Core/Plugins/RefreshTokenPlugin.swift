@@ -5,11 +5,14 @@
 //  Created by David on 2019/11/18.
 //
 
+import Foundation
 import Moya
 import Result
 import SwiftyJSON
 
 public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
+
+    // MARK: - Properties
 
     public var networkClientRef: API.NetworkClient?
     private let triggerRefreshClosure: ((Response) -> Bool)
@@ -21,6 +24,8 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
     private let refreshRequest: Target
     private let successToRefreshClosure: ((JSON) -> Void)
     private let failToRefreshClosure: ((Error) -> Void)
+
+    // MARK: - Initialization
 
     public init(
         triggerRefreshClosure: @escaping ((Response) -> Bool),
@@ -35,11 +40,31 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
         self.failToRefreshClosure = failToRefreshClosure
     }
 
+    // MARK: - To check token valid time before sending requests
+    
+    public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+        guard !(target is AuthRequest) else { return request } // ignore auth request
+
+
+
+        return request
+    }
+
+    // MARK: - When receive 403 or 401 unauthurized error code
+
     public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
         guard !(target is AuthRequest) else { return } // ignore auth request
+        guard networkClientRef != nil else {
+            assertionFailure("you should assing a network client ref!!")
+            return
+        }
+        // if token has just been refreshed,
+        // will have 60 seconds to trust this access token and refresh token to be valid.
+        // in 60 second range, all refresh will be just ignored.
+        guard shouldTrustLastRefreshRequest() else { return }
 
         switch result {
-        case let .success(response):
+        case .success(let response):
             if triggerRefreshClosure(response) {
                 if !isRefreshing {
                     // 1. stop network client
@@ -54,9 +79,29 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
                         .catch({ e in self.failToRefreshClosure(e) })
                 }
             }
-        case let .failure(error):
+        case .failure:
             // get an error, might be network timeout issue, no need to logout user
-            print(error)
+            return
+        }
+    }
+
+    // MARK: - refresh trust policy
+
+    private var lastRefreshTime: Date?
+    private let refreshTrustTime: TimeInterval = 60
+
+    private func timeSinceLastRefreshTime() -> TimeInterval? {
+        guard let lastRefreshTime = lastRefreshTime else { return nil }
+        return (Date().timeIntervalSince1970 - lastRefreshTime.timeIntervalSince1970)
+    }
+
+    private func shouldTrustLastRefreshRequest() -> Bool {
+        if let timeSinceLastRefreshTime = timeSinceLastRefreshTime(), (timeSinceLastRefreshTime < refreshTrustTime) {
+            // just refreshed!
+            return true
+        } else {
+            // not refreshed yet
+            return false
         }
     }
 
