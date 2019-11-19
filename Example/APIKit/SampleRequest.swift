@@ -23,6 +23,9 @@ public struct SampleReqeust {}
 extension API {
     public static let sharedd: NetworkClient = {
         let r = RefreshTokenPlugin(
+            checkRefreshTokenValidLengthClosure: {
+                return true
+            },
             triggerRefreshClosure: { response in
                 return true
             },

@@ -15,6 +15,7 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
     // MARK: - Properties
 
     public var networkClientRef: API.NetworkClient?
+    private let checkRefreshTokenValidLengthClosure: (() -> Bool)
     private let triggerRefreshClosure: ((Response) -> Bool)
     private var isRefreshing: Bool {
         didSet {
@@ -28,11 +29,13 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
     // MARK: - Initialization
 
     public init(
+        checkRefreshTokenValidLengthClosure: @escaping (() -> Bool),
         triggerRefreshClosure: @escaping ((Response) -> Bool),
         refreshRequest: Target,
         successToRefreshClosure: @escaping ((JSON) -> Void),
         failToRefreshClosure: @escaping ((Error) -> Void)
     ) {
+        self.checkRefreshTokenValidLengthClosure = checkRefreshTokenValidLengthClosure
         self.triggerRefreshClosure = triggerRefreshClosure
         self.isRefreshing = false
         self.refreshRequest = refreshRequest
@@ -45,7 +48,9 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
         guard !(target is AuthRequest) else { return request } // ignore auth request
 
-
+        if checkRefreshTokenValidLengthClosure() {
+            performRefresh()
+        }
 
         return request
     }
@@ -54,6 +59,21 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
 
     public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
         guard !(target is AuthRequest) else { return } // ignore auth request
+
+        switch result {
+        case .success(let response):
+            if triggerRefreshClosure(response) {
+                performRefresh()
+            }
+        case .failure:
+            // get an error, might be network timeout issue, no need to logout user
+            return
+        }
+    }
+
+    // MARK: - Methods
+
+    private func performRefresh() {
         guard networkClientRef != nil else {
             assertionFailure("you should assing a network client ref!!")
             return
@@ -61,27 +81,22 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
         // if token has just been refreshed,
         // will have 60 seconds to trust this access token and refresh token to be valid.
         // in 60 second range, all refresh will be just ignored.
-        guard shouldTrustLastRefreshRequest() else { return }
+        if shouldTrustLastRefreshRequest() { return }
 
-        switch result {
-        case .success(let response):
-            if triggerRefreshClosure(response) {
-                if !isRefreshing {
-                    // 1. stop network client
-                    isRefreshing = true
-                    // 2. refresh access token
-                    networkClientRef?.request(refreshRequest)
-                        // 3. store response to credential manager
-                        .done({ json in self.successToRefreshClosure(json) })
-                        // 4. always release blocked request queue
-                        .ensure({ self.isRefreshing = false })
-                        // 5. handle error if refresh failed, if request has failed, should log out user
-                        .catch({ e in self.failToRefreshClosure(e) })
-                }
-            }
-        case .failure:
-            // get an error, might be network timeout issue, no need to logout user
-            return
+        if !isRefreshing {
+            // 1. stop network client
+            isRefreshing = true
+            // 2. refresh access token
+            networkClientRef?.request(refreshRequest)
+                // 3. store response to credential manager
+                .done({ json in
+                    self.lastRefreshTime = Date()
+                    self.successToRefreshClosure(json)
+                })
+                // 4. always release blocked request queue
+                .ensure({ self.isRefreshing = false })
+                // 5. handle error if refresh failed, if request has failed, should log out user
+                .catch({ e in self.failToRefreshClosure(e) })
         }
     }
 
