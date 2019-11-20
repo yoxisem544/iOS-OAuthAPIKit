@@ -75,7 +75,7 @@ final public class API {
     /// Default api client
     public static let shared: NetworkClient = {
         let plugins: [PluginType] = [
-            NetworkTrafficPlugin.init(indicatorType: .start, .done),
+            NetworkTrafficPlugin(indicators: .start, .done),
         ]
         let provider = MoyaProvider<MultiTarget>(plugins: plugins)
         let client = NetworkClient(provider: provider)
