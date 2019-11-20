@@ -29,7 +29,7 @@ public class NetworkTrafficPlugin: PluginType {
         let requestURL = request.request?.url?.absoluteString ?? ""
         print("🔶==================================================================================")
         print("🔆 request starting 🔗 \(requestURL)")
-        print("📩 header \(request.request?.allHTTPHeaderFields)")
+        print("📩 header \(request.request?.allHTTPHeaderFields ?? [:])")
 
         switch target.task {
         case let .requestParameters(parameters: pms, encoding: encoding):
@@ -50,12 +50,12 @@ public class NetworkTrafficPlugin: PluginType {
             let url = response.request?.url?.absoluteString ?? ""
             print("request 🔗 \(url) done!")
             print("status code: \(response.statusCode)")
-            print("response json: \n\(try? JSON(data: response.data))")
+            print("response json: \n\(String(describing: try? JSON(data: response.data)))")
         case let .failure(error):
             let url = error.response?.request?.url?.absoluteString ?? ""
             print("request 🔗 \(url) failed!")
-            print("status code: \(error.response?.statusCode)")
-            print("error response: \n\(try? error.response?.mapString())")
+            print("status code: \(String(describing: error.response?.statusCode))")
+            print("error response: \n\(String(describing: try? error.response?.mapString()))")
         }
 
         print("❕========================================================================")
