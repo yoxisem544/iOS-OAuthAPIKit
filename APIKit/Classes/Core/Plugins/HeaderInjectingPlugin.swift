@@ -1,5 +1,5 @@
 //
-//  XAuthHeaderInjectingPlugin.swift
+//  HeaderInjectingPlugin.swift
 //  APIKit
 //
 //  Created by David on 2019/8/29.
@@ -8,14 +8,14 @@
 
 import Moya
 
-public protocol XAuthHeaderInjecting {}
+public protocol HeaderInjecting {}
 
-public class XAuthHeaderInjectingPlugin : PluginType {
+public class HeaderInjectingPlugin : PluginType {
 
-    public let xAuthHeaderClosure: ((TargetType) -> String)
+    public let headerClosure: ((TargetType) -> [String: String])
 
-    public init(xAuthHeaderClosure: @escaping ((TargetType) -> String)) {
-        self.xAuthHeaderClosure = xAuthHeaderClosure
+    public init(headerClosure: @escaping ((TargetType) -> [String: String])) {
+        self.headerClosure = headerClosure
     }
 
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
@@ -28,8 +28,9 @@ public class XAuthHeaderInjectingPlugin : PluginType {
         }()
 
         var request = request
-        let value = xAuthHeaderClosure(actualTarget)
-        request.addValue(value, forHTTPHeaderField: "x-auth-token")
+        for (key, value) in headerClosure(actualTarget) {
+            request.addValue(value, forHTTPHeaderField: key)
+        }
 
         return request
     }

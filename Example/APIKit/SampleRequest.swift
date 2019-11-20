@@ -35,12 +35,12 @@ extension API {
             successToRefreshClosure: { json in accessToken += "after refresh" },
             failToRefreshClosure: { error in }
         )
-        let xAuthHeaderInjectingPlugin = XAuthHeaderInjectingPlugin(xAuthHeaderClosure: { target in
-            return API.config.xAuthToken
+        let headerInjectingPlugin = HeaderInjectingPlugin(headerClosure: { target in
+            return ["x-auth-token": API.config.xAuthToken]
         })
         let plugins: [PluginType] = [
             NetworkTrafficPlugin.init(indicators: .start, .done),
-            xAuthHeaderInjectingPlugin,
+            headerInjectingPlugin,
             r,
             AccessTokenProvidingPlugin(tokenClosure: {
                 return accessToken
