@@ -13,9 +13,6 @@ public protocol SampleRequestType: BaseRequestType {}
 
 extension SampleRequestType {
     public var baseURL: URL { API.config.baseURL }
-    public var headers: [String : String]? { [:] }
-    public var sampleData: Data { Data() }
-    public var parameters: [String : Any] { [:] }
 }
 
 public struct SampleReqeust {}

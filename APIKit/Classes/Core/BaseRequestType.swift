@@ -10,3 +10,9 @@ import Moya
 public protocol BaseRequestType: TargetType {
     var parameters: [String : Any] { get }
 }
+
+public extension BaseRequestType {
+    var headers: [String : String]? { nil }
+    var sampleData: Data { Data() }
+    var parameters: [String : Any] { [:] }
+}
