@@ -18,8 +18,10 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-  Help you to handle network calls and oauth refresh token.
-  You do not need to know the complex part of oauth.
+  A network abstraction layer that help you to create a type safe network layer.
+  With help of Promise and RxSwift to easy handle complex callback and streaming problem.
+  ObjectMapper to help decode JSON to Swift object.
+  Also, most complex part of OAuth 2.0 is access and refresh token. We've create a easy way for you to manage tokens. This include token refresh, request retry, retry with exponetial behavior and suspending on going requests.
                        DESC
 
   s.homepage         = 'https://github.com/kkday-it/iOS-APIKit'
