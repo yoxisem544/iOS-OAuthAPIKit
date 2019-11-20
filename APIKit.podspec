@@ -22,18 +22,18 @@ Pod::Spec.new do |s|
   You do not need to know the complex part of oauth.
                        DESC
 
-  s.homepage         = 'https://github.com/yoxisem544/APIKit'
+  s.homepage         = 'https://github.com/kkday-it/iOS-APIKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'yoxisem544' => 'yoxisem544@gmail.com' }
-  s.source           = { :git => 'https://github.com/yoxisem544/APIKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'git@github.com:kkday-it/iOS-APIKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.default_subspec = "Core"
   s.swift_version = '5.0'
   s.cocoapods_version = '>= 1.4.0'
   s.ios.deployment_target = '10.0'
-  
+
   # s.resource_bundles = {
   #   'APIKit' => ['APIKit/Assets/*.png']
   # }

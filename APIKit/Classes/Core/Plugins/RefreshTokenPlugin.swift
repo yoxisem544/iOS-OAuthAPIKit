@@ -3,6 +3,7 @@
 //  APIKit
 //
 //  Created by David on 2019/11/18.
+//  Copyright © 2019 David. All rights reserved.
 //
 
 import Foundation

@@ -1,9 +1,9 @@
 //
 //  Promise+Attempt.swift
-//  SCM-iOS APP
+//  APIKit
 //
 //  Created by David on 2019/8/29.
-//  Copyright © 2019 KKday. All rights reserved.
+//  Copyright © 2019 David. All rights reserved.
 //
 
 import PromiseKit

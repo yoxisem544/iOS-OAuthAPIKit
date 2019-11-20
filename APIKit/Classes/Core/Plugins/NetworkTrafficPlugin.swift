@@ -1,9 +1,9 @@
 //
 //  NetworkTrafficPlugin.swift
-//  SCM-iOS APP
+//  APIKit
 //
 //  Created by David on 2019/8/29.
-//  Copyright © 2019 KKday. All rights reserved.
+//  Copyright © 2019 David. All rights reserved.
 //
 
 import Foundation
@@ -13,18 +13,18 @@ import Result
 
 public class NetworkTrafficPlugin: PluginType {
 
-    public enum IndicatorType: CaseIterable {
+    public enum Indicator: CaseIterable {
         case start, done
     }
 
-    private let indicatorType: [IndicatorType]
+    private let indicators: [Indicator]
 
-    public init(indicatorType: IndicatorType...) {
-        self.indicatorType = indicatorType
+    public init(indicators: Indicator...) {
+        self.indicators = indicators
     }
 
     public func willSend(_ request: RequestType, target: TargetType) {
-        guard indicatorType.contains(.start) else { return }
+        guard indicators.contains(.start) else { return }
 
         let requestURL = request.request?.url?.absoluteString ?? ""
         print("🔶==================================================================================")
@@ -41,7 +41,7 @@ public class NetworkTrafficPlugin: PluginType {
     }
 
     public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
-        guard indicatorType.contains(.done) else { return }
+        guard indicators.contains(.done) else { return }
 
         print("❕ Request finished =======================================================")
 
