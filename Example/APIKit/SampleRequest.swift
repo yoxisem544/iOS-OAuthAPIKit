@@ -39,7 +39,7 @@ extension API {
             return API.config.xAuthToken
         })
         let plugins: [PluginType] = [
-            NetworkTrafficPlugin.init(indicatorType: .start, .done),
+            NetworkTrafficPlugin.init(indicators: .start, .done),
             xAuthHeaderInjectingPlugin,
             r,
             AccessTokenProvidingPlugin(tokenClosure: {

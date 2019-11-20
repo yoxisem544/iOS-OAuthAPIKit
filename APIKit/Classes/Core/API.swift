@@ -6,32 +6,14 @@
 //  Copyright © 2019 David. All rights reserved.
 //
 
-import Result
 import Moya
 import PromiseKit
-import Alamofire
 import SwiftyJSON
-import ObjectMapper
 
-public typealias Method = HTTPMethod
+public typealias Method = Moya.Method
 public typealias Task = Moya.Task
 public typealias URLEncoding = Moya.URLEncoding
 public typealias JSONEncoding = Moya.JSONEncoding
-
-// 定義一個 protocol 需要預先指定 response 的 type
-public protocol DecodableResponse {
-    associatedtype ResponseType: Decodable
-    var jsonDecodingEntryPath: String? { get }
-}
-
-extension DecodableResponse {
-    // default to no json entry point
-    var jsonDecodingEntryPath: String? { return nil }
-}
-
-public protocol MappableResponse {
-    associatedtype ResponseType: BaseMappable
-}
 
 final public class API {
 
