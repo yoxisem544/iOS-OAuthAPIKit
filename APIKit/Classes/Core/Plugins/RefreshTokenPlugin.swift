@@ -29,6 +29,14 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
 
     // MARK: - Initialization
 
+    /// Creates a RefreshTokenPlugin.
+    ///
+    /// - Parameters:
+    ///   - checkRefreshTokenValidLengthClosure: check token length in this closure to tell plugin if token is still valid.
+    ///   - triggerRefreshClosure: check response's error code in this closure to tell plugin if given status code means token is invalid.
+    ///   - refreshRequest: Request that is able to retreive a new token.
+    ///   - successToRefreshClosure: refresh success callback.
+    ///   - failToRefreshClosure: refresh fail callback.
     public init(
         checkRefreshTokenValidLengthClosure: @escaping (() -> Bool),
         triggerRefreshClosure: @escaping ((Response) -> Bool),

@@ -1,24 +1,20 @@
 //
-//  API+Rx.swift
+//  API+Rx+Retry.swift
 //  APIKit
 //
-//  Created by David on 2019/8/29.
-//  Copyright © 2019 David. All rights reserved.
+//  Created by David on 2019/11/20.
 //
 
-import Moya
 import RxSwift
+import ObjectMapper
 import SwiftyJSON
+import Moya
 
-// MARK: - Rx extension
-
-extension API.NetworkClient: ReactiveCompatible {}
-
-// MARK: - SwiftyJSON + RxSwift
+// MARK: - SwiftyJSON + RxSwift + Retry
 
 extension Reactive where Base == API.NetworkClient {
 
-    public func request<Request: TargetType>(_ request: Request) -> Single<JSON> {
+    public func request<Request: TargetType & RetryableRquest>(_ request: Request) -> Single<JSON> {
         let target = MultiTarget(request)
         return base.provider.rx.request(target)
             .filterSuccessfulStatusCodes()
@@ -27,11 +23,11 @@ extension Reactive where Base == API.NetworkClient {
 
 }
 
-// MARK: - DecodableResponse + RxSwift
+// MARK: - DecodableResponse + RxSwift + Retry
 
 extension Reactive where Base == API.NetworkClient {
 
-    public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Single<Request.ResponseType> {
+    public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
             .filterSuccessfulStatusCodes()
@@ -40,13 +36,13 @@ extension Reactive where Base == API.NetworkClient {
 
 }
 
-// MARK: - MappableResponse + RxSwift
-
+// MARK: - MappableResponse + RxSwift + Retry
 extension Reactive where Base == API.NetworkClient {
 
-    public func request<Request: TargetType & MappableResponse>(_ request: Request) -> Single<Request.ResponseType> {
+    public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
+            .retry(request.retryBehavior)
             .filterSuccessfulStatusCodes()
             .map(Request.ResponseType.self)
     }

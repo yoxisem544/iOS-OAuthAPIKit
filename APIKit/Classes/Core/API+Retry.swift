@@ -11,6 +11,7 @@ import Moya
 import PromiseKit
 import SwiftyJSON
 
+/// For requests that needs retry behavior
 public protocol RetryableRquest {
     var retryBehavior: RepeatBehavior { get }
 }

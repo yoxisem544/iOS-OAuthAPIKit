@@ -11,10 +11,22 @@ import Moya
 extension API {
 
     public struct StubbingConstructor {
+
+        /// Default stubing status code is 200
         private var statusCode: Int = 200
+
+        /// Default to return a empty data
         private var mockData: Data = Data()
+
+        /// default response time will be set to 0.3 second after network request has performed
         private var responseTime: TimeInterval = 0.3
 
+        /// Set success stubbing condition.
+        ///
+        /// - Parameters:
+        ///   - mockData: mock data for stubbing
+        ///   - statusCode: fake status code
+        ///   - responseTime: response time of stubbing request
         public func setSuccess(mockData: Data, statusCode: Int = 200, responseTime: TimeInterval = 0.3) -> NetworkClient {
             return NetworkClient(provider: {
                 let mockDataClosure = makeMockDataClosure(statusCode, mockData)
@@ -23,6 +35,12 @@ extension API {
             }())
         }
 
+        /// Set fail stubbing condition.
+        ///
+        /// - Parameters:
+        ///   - mockData: mock data for stubbing
+        ///   - statusCode: fake status code
+        ///   - responseTime: response time of stubbing request
         public func setFailure(mockData: Data, statusCode: Int = 400, responseTime: TimeInterval = 0.3) -> NetworkClient {
             return NetworkClient(provider: {
                 let mockDataClosure = makeMockDataClosure(statusCode, mockData)
