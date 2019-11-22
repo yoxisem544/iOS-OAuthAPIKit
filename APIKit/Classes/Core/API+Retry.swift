@@ -23,28 +23,23 @@ public extension RetryableRquest {
 
 extension API.NetworkClient {
 
-    public func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
+    internal func attemptRequest<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<Response> {
         return attempt(retryingRequest.retryBehavior, {
-            return self.perform(retryingRequest, on: self.requestQueue)
+            self.perform(retryingRequest, on: self.requestQueue)
         })
         .filterSuccessAndRedirectOrThrowNetworkClientError()
-        .mapJSON()
+    }
+
+    public func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
+        return attemptRequest(retryingRequest).mapJSON()
     }
 
     public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attempt(retryingRequest.retryBehavior, {
-            return self.perform(retryingRequest, on: self.requestQueue)
-        })
-        .filterSuccessAndRedirectOrThrowNetworkClientError()
-        .map(Request.ResponseType.self)
+        return attemptRequest(retryingRequest).map(Request.ResponseType.self)
     }
 
     public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attempt(retryingRequest.retryBehavior, {
-            return self.perform(retryingRequest, on: self.requestQueue)
-        })
-        .filterSuccessAndRedirectOrThrowNetworkClientError()
-        .map(Request.ResponseType.self)
+        return attemptRequest(retryingRequest).map(Request.ResponseType.self)
     }
 
 }
