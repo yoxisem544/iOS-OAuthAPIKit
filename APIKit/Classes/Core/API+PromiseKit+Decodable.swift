@@ -12,7 +12,9 @@ import PromiseKit
 extension API.NetworkClient {
 
     public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
-        return perform(request, on: requestQueue).map(Request.ResponseType.self)
+        return perform(request, on: requestQueue)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .map(Request.ResponseType.self)
     }
 
 }

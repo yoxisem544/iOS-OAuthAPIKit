@@ -15,8 +15,7 @@ import Moya
 extension Reactive where Base == API.NetworkClient {
 
     public func request<Request: TargetType & RetryableRquest>(_ request: Request) -> Single<JSON> {
-        let target = MultiTarget(request)
-        return base.provider.rx.request(target)
+        return performRequest(of: request)
             .retry(request.retryBehavior)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decodeToJSON()
@@ -29,8 +28,7 @@ extension Reactive where Base == API.NetworkClient {
 extension Reactive where Base == API.NetworkClient {
 
     public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
-        let target = MultiTarget(request)
-        return base.provider.rx.request(target, callbackQueue: base.requestQueue)
+        return performRequest(of: request)
             .retry(request.retryBehavior)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decode(to: Request.ResponseType.self)
@@ -42,11 +40,10 @@ extension Reactive where Base == API.NetworkClient {
 extension Reactive where Base == API.NetworkClient {
 
     public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
-        let target = MultiTarget(request)
-        return base.provider.rx.request(target, callbackQueue: base.requestQueue)
-            .retry(request.retryBehavior)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
+        return performRequest(of: request)
+        .retry(request.retryBehavior)
+        .filterSuccessAndRedirectOrThrowNetworkClientError()
+        .decode(to: Request.ResponseType.self)
     }
 
 }

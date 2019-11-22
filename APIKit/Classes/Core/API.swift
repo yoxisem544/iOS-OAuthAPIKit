@@ -61,7 +61,9 @@ final public class API {
 extension API.NetworkClient {
 
     public func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
-        return perform(request, on: requestQueue).mapJSON()
+        return perform(request, on: requestQueue)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .mapJSON()
     }
 
 }
@@ -74,18 +76,28 @@ extension API.NetworkClient {
             provider.request(target, callbackQueue: callbackQueue, completion: { response in
                 switch response {
                 case .success(let r):
-                    do {
-                        // filter code in range 200...399
-                        try r.filterSuccessAndRedirectOrThrowNetworkClientError()
-                        seal.fulfill(r)
-                    } catch {
-                        seal.reject(error)
-                    }
+                    seal.fulfill(r)
                 case .failure(let e):
                     seal.reject(e)
                 }
             })
         }
+    }
+
+}
+
+extension Promise where T == Response {
+
+    internal func filter<R: RangeExpression>(statusCodes: R) -> Promise<T> where R.Bound == Int {
+        return compactMap({ try $0.filterOrThrowNetworkClientError(statusCodes: statusCodes) })
+    }
+
+    internal func filterSuccessAndRedirectOrThrowNetworkClientError() -> Promise<T> {
+        return compactMap({ try $0.filterSuccessAndRedirectOrThrowNetworkClientError() })
+    }
+
+    internal func filterSuccessThrowNetworkClientError() -> Promise<T> {
+        return compactMap({ try $0.filterSuccessOrThrowNetworkClientError() })
     }
 
 }

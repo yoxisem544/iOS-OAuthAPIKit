@@ -10,24 +10,17 @@ import RxSwift
 
 extension ObservableType where E == Response {
 
-    internal func filterSuccessAndRedirectOrThrowNetworkClientError() -> Observable<E> {
-        return flatMap({ response -> Observable<E> in
-            do {
-                return .just(try response.filterSuccessAndRedirectOrThrowNetworkClientError())
-            } catch {
-                throw API.NetworkClientError.statucCodeError(error: error)
-            }
-        })
+    /// Filters out responses that don't fall within the given closed range, generating errors when others are encountered.
+    internal func filter<R: RangeExpression>(statusCodes: R) -> Observable<E> where R.Bound == Int {
+        return flatMap { Observable.just(try $0.filterOrThrowNetworkClientError(statusCodes: statusCodes)) }
     }
 
-    internal func filterSuccessOrThrowNetworkClientError() -> Observable<E> {
-        return flatMap({ response -> Observable<E> in
-            do {
-                return .just(try response.filterSuccessOrThrowNetworkClientError())
-            } catch {
-                throw API.NetworkClientError.statucCodeError(error: error)
-            }
-        })
+    internal func filterSuccessAndRedirectOrThrowNetworkClientError() -> Observable<E> {
+        return flatMap { Observable.just(try $0.filterSuccessAndRedirectOrThrowNetworkClientError()) }
+    }
+
+    internal func filterSuccessThrowNetworkClientError() -> Observable<E> {
+        return flatMap { Observable.just(try $0.filterSuccessOrThrowNetworkClientError()) }
     }
 
 }

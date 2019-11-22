@@ -9,8 +9,14 @@ import Moya
 
 extension Response {
 
-    @discardableResult
-    func filterSuccessAndRedirectOrThrowNetworkClientError() throws -> Response {
+    /**
+     Returns the `Response` if the `statusCode` falls within the specified range.
+
+     - parameters:
+        - statusCodes: The range of acceptable status codes.
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
+    func filterOrThrowNetworkClientError<R: RangeExpression>(statusCodes: R) throws -> Response where R.Bound == Int {
         do {
             return try filter(statusCodes: 200...399)
         } catch {
@@ -19,12 +25,13 @@ extension Response {
     }
 
     @discardableResult
+    func filterSuccessAndRedirectOrThrowNetworkClientError() throws -> Response {
+        return try filterOrThrowNetworkClientError(statusCodes: 200...399)
+    }
+
+    @discardableResult
     func filterSuccessOrThrowNetworkClientError() throws -> Response {
-        do {
-            return try filter(statusCodes: 200...299)
-        } catch {
-            throw API.NetworkClientError.statucCodeError(error: error)
-        }
+        return try filterOrThrowNetworkClientError(statusCodes: 200...299)
     }
 
 }
