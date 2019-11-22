@@ -1,12 +1,12 @@
 PODS:
   - Alamofire (4.9.1)
-  - APIKit/Core (0.1.2):
+  - APIKit/Core (1.0.1):
     - Alamofire (~> 4.9)
     - Moya (~> 13.0)
     - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - APIKit/RxSwift (0.1.2):
+  - APIKit/RxSwift (1.0.1):
     - Alamofire (~> 4.9)
     - APIKit/Core
     - Moya (~> 13.0)
@@ -61,7 +61,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  APIKit: a6fd21ed997b2d5a33b9e1e32530e8a9c2cc4000
+  APIKit: 744c74148c42142f773819697ed3d621c4a37c8c
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
