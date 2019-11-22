@@ -10,15 +10,22 @@ import ObjectMapper
 import SwiftyJSON
 import Moya
 
+extension Reactive where Base == API.NetworkClient {
+
+    public func attemptRequest<Request: TargetType & RetryableRquest>(of request: Request) -> Single<Response> {
+        return performRequest(of: request)
+            .retry(request.retryBehavior)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+    }
+
+}
+
 // MARK: - SwiftyJSON + RxSwift + Retry
 
 extension Reactive where Base == API.NetworkClient {
 
     public func request<Request: TargetType & RetryableRquest>(_ request: Request) -> Single<JSON> {
-        return performRequest(of: request)
-            .retry(request.retryBehavior)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decodeToJSON()
+        return attemptRequest(of: request).decodeToJSON()
     }
 
 }
@@ -28,10 +35,7 @@ extension Reactive where Base == API.NetworkClient {
 extension Reactive where Base == API.NetworkClient {
 
     public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
-        return performRequest(of: request)
-            .retry(request.retryBehavior)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
+        return attemptRequest(of: request).decode(to: Request.ResponseType.self)
     }
 
 }
@@ -40,10 +44,7 @@ extension Reactive where Base == API.NetworkClient {
 extension Reactive where Base == API.NetworkClient {
 
     public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
-        return performRequest(of: request)
-        .retry(request.retryBehavior)
-        .filterSuccessAndRedirectOrThrowNetworkClientError()
-        .decode(to: Request.ResponseType.self)
+        return attemptRequest(of: request).decode(to: Request.ResponseType.self)
     }
 
 }
