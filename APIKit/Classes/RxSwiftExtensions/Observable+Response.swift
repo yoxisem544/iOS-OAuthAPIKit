@@ -10,7 +10,7 @@ import RxSwift
 
 extension ObservableType where E == Response {
 
-    func filterSuccessAndRedirectOrThrowNetworkClientError() -> Observable<E> {
+    internal func filterSuccessAndRedirectOrThrowNetworkClientError() -> Observable<E> {
         return flatMap({ response -> Observable<E> in
             do {
                 return .just(try response.filterSuccessAndRedirectOrThrowNetworkClientError())
@@ -20,7 +20,7 @@ extension ObservableType where E == Response {
         })
     }
 
-    func filterSuccessOrThrowNetworkClientError() -> Observable<E> {
+    internal func filterSuccessOrThrowNetworkClientError() -> Observable<E> {
         return flatMap({ response -> Observable<E> in
             do {
                 return .just(try response.filterSuccessOrThrowNetworkClientError())

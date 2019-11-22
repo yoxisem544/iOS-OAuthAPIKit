@@ -10,7 +10,7 @@ import RxSwift
 
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 
-    func filterSuccessAndRedirectOrThrowNetworkClientError() -> Single<Element> {
+    internal func filterSuccessAndRedirectOrThrowNetworkClientError() -> Single<Element> {
         return flatMap({ response -> Single<Element> in
             do {
                 return .just(try response.filterSuccessAndRedirectOrThrowNetworkClientError())
@@ -20,7 +20,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         })
     }
 
-    func filterSuccessThrowNetworkClientError() -> Single<Element> {
+    internal func filterSuccessThrowNetworkClientError() -> Single<Element> {
         return flatMap({ response -> Single<Element> in
             do {
                 return .just(try response.filterSuccessOrThrowNetworkClientError())

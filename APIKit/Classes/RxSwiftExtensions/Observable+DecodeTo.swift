@@ -12,7 +12,7 @@ import SwiftyJSON
 
 extension ObservableType where E == Response {
 
-    func decodeToJSON() -> Observable<JSON> {
+    internal func decodeToJSON() -> Observable<JSON> {
         return flatMap({ response -> Observable<JSON> in
             do {
                 return .just(try JSON(data: response.data))
@@ -22,7 +22,7 @@ extension ObservableType where E == Response {
         })
     }
 
-    func decode<T: BaseMappable>(to type: T.Type) -> Observable<T> {
+    internal func decode<T: BaseMappable>(to type: T.Type) -> Observable<T> {
         return flatMap({ response -> Observable<T> in
             do {
                 return .just(try response.map(type))
@@ -32,7 +32,7 @@ extension ObservableType where E == Response {
         })
     }
 
-    func decode<T: Decodable>(to type: T.Type) -> Observable<T> {
+    internal func decode<T: Decodable>(to type: T.Type) -> Observable<T> {
         return flatMap({ response -> Observable<T> in
             do {
                 return .just(try response.map(type))

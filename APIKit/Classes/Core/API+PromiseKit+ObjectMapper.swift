@@ -21,7 +21,7 @@ extension API.NetworkClient {
 
 extension Promise where T == Response {
 
-    func map<ResponseType: BaseMappable>(_ type: ResponseType.Type) -> Promise<ResponseType> {
+    internal func map<ResponseType: BaseMappable>(_ type: ResponseType.Type) -> Promise<ResponseType> {
         return then({ response -> Promise<ResponseType> in
             do {
                 return .value(try response.map(type))

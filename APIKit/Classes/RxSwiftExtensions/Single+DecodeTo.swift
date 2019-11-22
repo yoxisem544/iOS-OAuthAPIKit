@@ -12,7 +12,7 @@ import SwiftyJSON
 
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 
-    func decodeToJSON() -> Single<JSON> {
+    internal func decodeToJSON() -> Single<JSON> {
         return flatMap({ response -> Single<JSON> in
             do {
                 return .just(try JSON(data: response.data))
@@ -22,7 +22,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         })
     }
 
-    func decode<T: BaseMappable>(to type: T.Type) -> Single<T> {
+    internal func decode<T: BaseMappable>(to type: T.Type) -> Single<T> {
         return flatMap({ response -> Single<T> in
             do {
                 return .just(try response.map(type))
@@ -32,7 +32,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         })
     }
 
-    func decode<T: Decodable>(to type: T.Type) -> Single<T> {
+    internal func decode<T: Decodable>(to type: T.Type) -> Single<T> {
         return flatMap({ response -> Single<T> in
             do {
                 return .just(try response.map(type))
