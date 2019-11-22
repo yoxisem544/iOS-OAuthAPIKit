@@ -26,19 +26,19 @@ extension API.NetworkClient {
     public func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
         return attempt(retryingRequest.retryBehavior, {
             return self.perform(retryingRequest, on: self.requestQueue)
-        })
+        }).mapJSON()
     }
 
     public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
         return attempt(retryingRequest.retryBehavior, {
             return self.perform(retryingRequest, on: self.requestQueue)
-        })
+        }).map(Request.ResponseType.self)
     }
 
     public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
         return attempt(retryingRequest.retryBehavior, {
             return self.perform(retryingRequest, on: self.requestQueue)
-        })
+        }).map(Request.ResponseType.self)
     }
 
 }

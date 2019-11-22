@@ -19,12 +19,16 @@ fileprivate let authRequestQueue = DispatchQueue(label: "io.api.network_client.a
 
 extension API.NetworkClient {
 
-    public func request<Reqeust: TargetType & AuthRequest>(_ request: Reqeust) -> Promise<JSON> {
-        return perform(request, on: authRequestQueue)
+    public func request<Request: TargetType & AuthRequest>(_ request: Request) -> Promise<JSON> {
+        return perform(request, on: authRequestQueue).mapJSON()
     }
 
-    public func request<Reqeust: TargetType & MappableResponse & AuthRequest>(_ request: Reqeust) -> Promise<Reqeust.ResponseType> {
-        return perform(request, on: authRequestQueue)
+    public func request<Request: TargetType & DecodableResponse & AuthRequest>(_ request: Request) -> Promise<Request.ResponseType> {
+        return perform(request, on: authRequestQueue).map(Request.ResponseType.self)
+    }
+
+    public func request<Request: TargetType & MappableResponse & AuthRequest>(_ request: Request) -> Promise<Request.ResponseType> {
+        return perform(request, on: authRequestQueue).map(Request.ResponseType.self)
     }
 
 }

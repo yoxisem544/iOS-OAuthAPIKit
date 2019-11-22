@@ -62,26 +62,23 @@ final public class API {
 extension API.NetworkClient {
 
     public func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
-        return perform(request, on: requestQueue)
+        return perform(request, on: requestQueue).mapJSON()
     }
 
 }
 
 extension API.NetworkClient {
 
-    internal func perform<Request: TargetType>(_ request: Request, on callbackQueue: DispatchQueue) -> Promise<JSON> {
+    internal func perform<Request: TargetType>(_ request: Request, on callbackQueue: DispatchQueue) -> Promise<Response> {
         let target = MultiTarget(request)
         return Promise { seal in
             provider.request(target, callbackQueue: callbackQueue, completion: { response in
                 switch response {
                 case .success(let r):
                     do {
+                        // filter code in range 200...399
                         try r.filterSuccessAndRedirectOrThrowNetworkClientError()
-                        do {
-                            seal.fulfill(try JSON(data: r.data))
-                        } catch {
-                            seal.reject(API.NetworkClientError.decodingError(error: error))
-                        }
+                        seal.fulfill(r)
                     } catch {
                         seal.reject(error)
                     }
@@ -93,3 +90,18 @@ extension API.NetworkClient {
     }
 
 }
+
+extension Promise where T == Response {
+
+    func mapJSON() -> Promise<JSON> {
+        return then({ response -> Promise<JSON> in
+            do {
+                return .value(try JSON(data: response.data))
+            } catch {
+                throw API.NetworkClientError.decodingError(error: error)
+            }
+        })
+    }
+
+}
+
