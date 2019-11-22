@@ -19,20 +19,19 @@ extension API.NetworkClient {
             provider.request(target, callbackQueue: callbackQueue, completion: { response in
                 switch response {
                 case .success(let r):
+                    // check status code if 200~399, 200~299 is success status, 300~399 is for redirect
                     do {
-                        // check status code if 200~399, 200~299 is success status, 300~399 is for redirect
-                        switch r.statusCode {
-                        case 200...399:
-                            let result = try r.map(Request.ResponseType.self)
-                            seal.fulfill(result)
-                        default:
-                            seal.reject(self.handleErrorResponse(r))
+                        try r.filterSuccessAndRedirectOrThrowNetworkClientError()
+                        do {
+                            seal.fulfill(try r.map(Request.ResponseType.self))
+                        } catch {
+                            seal.reject(API.NetworkClientError.decodingError(error: error))
                         }
-                    } catch let e {
-                        seal.reject(e)
+                    } catch {
+                        seal.reject(error)
                     }
                 case .failure(let e):
-                    seal.reject(e)
+                    seal.reject(API.NetworkClientError.otherError(error: e))
                 }
             })
         }

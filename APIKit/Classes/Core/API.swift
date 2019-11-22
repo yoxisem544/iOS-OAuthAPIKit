@@ -18,9 +18,9 @@ public typealias JSONEncoding = Moya.JSONEncoding
 final public class API {
 
     public enum NetworkClientError: Error {
-        case clientSideError(statusCode: Int, errorResponse: Response)
-        case serverSideError(statusCode: Int, errorResponse: Response)
-        case undefinedError(statusCode: Int, errorResponse: Response)
+        case statucCodeError(error: Error)
+        case decodingError(error: Error)
+        case otherError(error: MoyaError)
     }
 
     public struct NetworkClient {
@@ -33,17 +33,6 @@ final public class API {
             self.provider = provider
         }
         let provider: MoyaProvider<MultiTarget>
-
-        func handleErrorResponse(_ r: Response) -> API.NetworkClientError {
-            switch r.statusCode {
-            case 400...499:
-                return API.NetworkClientError.clientSideError(statusCode: r.statusCode, errorResponse: r)
-            case 500...599:
-                return API.NetworkClientError.serverSideError(statusCode: r.statusCode, errorResponse: r)
-            default:
-                return API.NetworkClientError.undefinedError(statusCode: r.statusCode, errorResponse: r)
-            }
-        }
 
         public func blockRequestQueue() {
             requestQueue.suspend()
@@ -87,17 +76,17 @@ extension API.NetworkClient {
                 switch response {
                 case .success(let r):
                     do {
-                        switch r.statusCode {
-                        case 200...399:
+                        try r.filterSuccessAndRedirectOrThrowNetworkClientError()
+                        do {
                             seal.fulfill(try JSON(data: r.data))
-                        default:
-                            seal.reject(self.handleErrorResponse(r))
+                        } catch {
+                            seal.reject(API.NetworkClientError.decodingError(error: error))
                         }
-                    } catch let e {
-                        seal.reject(e)
+                    } catch {
+                        seal.reject(error)
                     }
                 case .failure(let e):
-                    seal.reject(e)
+                    seal.reject(API.NetworkClientError.otherError(error: e))
                 }
             })
         }

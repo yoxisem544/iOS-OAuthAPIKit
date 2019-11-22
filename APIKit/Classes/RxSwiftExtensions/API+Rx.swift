@@ -21,8 +21,14 @@ extension Reactive where Base == API.NetworkClient {
     public func request<Request: TargetType>(_ request: Request) -> Single<JSON> {
         let target = MultiTarget(request)
         return base.provider.rx.request(target)
-            .filterSuccessfulStatusCodes()
-            .map({ response in try JSON(data: response.data) })
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .flatMap({
+                do {
+                    return .just(try JSON(data: $0.data))
+                } catch {
+                    throw API.NetworkClientError.decodingError(error: error)
+                }
+            })
     }
 
 }
@@ -34,8 +40,14 @@ extension Reactive where Base == API.NetworkClient {
     public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
-            .filterSuccessfulStatusCodes()
-            .map(Request.ResponseType.self)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .flatMap({
+                do {
+                    return .just(try $0.map(Request.ResponseType.self))
+                } catch {
+                    throw API.NetworkClientError.decodingError(error: error)
+                }
+            })
     }
 
 }
@@ -47,8 +59,14 @@ extension Reactive where Base == API.NetworkClient {
     public func request<Request: TargetType & MappableResponse>(_ request: Request) -> Single<Request.ResponseType> {
         let target = MultiTarget(request)
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
-            .filterSuccessfulStatusCodes()
-            .map(Request.ResponseType.self)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .flatMap({
+                do {
+                    return .just(try $0.map(Request.ResponseType.self))
+                } catch {
+                    throw API.NetworkClientError.decodingError(error: error)
+                }
+            })
     }
 
 }
