@@ -57,17 +57,6 @@ final public class API {
 
 }
 
-// MARK: - General Decoding with SwiftyJSON
-extension API.NetworkClient {
-
-    public func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
-        return perform(request, on: requestQueue)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .mapJSON()
-    }
-
-}
-
 extension API.NetworkClient {
 
     internal func perform<Request: TargetType>(_ request: Request, on callbackQueue: DispatchQueue) -> Promise<Response> {
@@ -85,34 +74,3 @@ extension API.NetworkClient {
     }
 
 }
-
-extension Promise where T == Response {
-
-    internal func filter<R: RangeExpression>(statusCodes: R) -> Promise<T> where R.Bound == Int {
-        return compactMap({ try $0.filterOrThrowNetworkClientError(statusCodes: statusCodes) })
-    }
-
-    internal func filterSuccessAndRedirectOrThrowNetworkClientError() -> Promise<T> {
-        return compactMap({ try $0.filterSuccessAndRedirectOrThrowNetworkClientError() })
-    }
-
-    internal func filterSuccessThrowNetworkClientError() -> Promise<T> {
-        return compactMap({ try $0.filterSuccessOrThrowNetworkClientError() })
-    }
-
-}
-
-extension Promise where T == Response {
-
-    internal func mapJSON() -> Promise<JSON> {
-        return then({ response -> Promise<JSON> in
-            do {
-                return .value(try JSON(data: response.data))
-            } catch {
-                throw API.NetworkClientError.decodingError(error: error)
-            }
-        })
-    }
-
-}
-
