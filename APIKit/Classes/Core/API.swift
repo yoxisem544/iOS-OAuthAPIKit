@@ -20,7 +20,6 @@ final public class API {
     public enum NetworkClientError: Error {
         case statucCodeError(error: Error)
         case decodingError(error: Error)
-        case otherError(error: MoyaError)
     }
 
     public struct NetworkClient {
@@ -83,7 +82,7 @@ extension API.NetworkClient {
                         seal.reject(error)
                     }
                 case .failure(let e):
-                    seal.reject(API.NetworkClientError.otherError(error: e))
+                    seal.reject(e)
                 }
             })
         }
@@ -93,7 +92,7 @@ extension API.NetworkClient {
 
 extension Promise where T == Response {
 
-    func mapJSON() -> Promise<JSON> {
+    internal func mapJSON() -> Promise<JSON> {
         return then({ response -> Promise<JSON> in
             do {
                 return .value(try JSON(data: response.data))
