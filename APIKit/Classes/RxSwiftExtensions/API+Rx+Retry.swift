@@ -19,13 +19,7 @@ extension Reactive where Base == API.NetworkClient {
         return base.provider.rx.request(target)
             .retry(request.retryBehavior)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .flatMap({
-                do {
-                    return .just(try JSON(data: $0.data))
-                } catch {
-                    throw API.NetworkClientError.decodingError(error: error)
-                }
-            })
+            .decodeToJSON()
     }
 
 }
@@ -39,13 +33,7 @@ extension Reactive where Base == API.NetworkClient {
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
             .retry(request.retryBehavior)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .flatMap({
-                do {
-                    return .just(try $0.map(Request.ResponseType.self))
-                } catch {
-                    throw API.NetworkClientError.decodingError(error: error)
-                }
-            })
+            .decode(to: Request.ResponseType.self)
     }
 
 }
@@ -58,13 +46,7 @@ extension Reactive where Base == API.NetworkClient {
         return base.provider.rx.request(target, callbackQueue: base.requestQueue)
             .retry(request.retryBehavior)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .flatMap({
-                do {
-                    return .just(try $0.map(Request.ResponseType.self))
-                } catch {
-                    throw API.NetworkClientError.decodingError(error: error)
-                }
-            })
+            .decode(to: Request.ResponseType.self)
     }
 
 }
