@@ -9,5 +9,9 @@ import ObjectMapper
 
 /// Response that can be decoded by `ObjectMapper`
 public protocol MappableResponse {
-    associatedtype ResponseType: BaseMappable
+    associatedtype ResponseType: Mappable
+}
+
+public protocol ImmutableMappableResponse {
+    associatedtype ResponseType: ImmutableMappable
 }

@@ -8,12 +8,12 @@
 
 import ObjectMapper
 
-public struct User {
+public struct Userr {
     let username: String
     let userID: String
 }
 
-extension User: ImmutableMappable {
+extension Userr: ImmutableMappable {
     public init(map: Map) throws {
         username = try map.value("username")
         userID = try map.value("user_id")

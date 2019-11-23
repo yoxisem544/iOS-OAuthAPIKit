@@ -22,7 +22,17 @@ extension ObservableType where E == Response {
         })
     }
 
-    internal func decode<T: BaseMappable>(to type: T.Type) -> Observable<T> {
+    internal func decode<T: Mappable>(to type: T.Type) -> Observable<T> {
+        return flatMap({ response -> Observable<T> in
+            do {
+                return .just(try response.map(type))
+            } catch {
+                throw API.NetworkClientError.decodingError(error: error)
+            }
+        })
+    }
+
+    internal func decode<T: ImmutableMappable>(to type: T.Type) -> Observable<T> {
         return flatMap({ response -> Observable<T> in
             do {
                 return .just(try response.map(type))

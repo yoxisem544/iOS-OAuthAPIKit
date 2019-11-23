@@ -41,4 +41,8 @@ extension API.NetworkClient {
         return attemptRequest(retryingRequest).map(Request.ResponseType.self)
     }
 
+    public func request<Request: TargetType & ImmutableMappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
+        return attemptRequest(retryingRequest).map(Request.ResponseType.self)
+    }
+
 }

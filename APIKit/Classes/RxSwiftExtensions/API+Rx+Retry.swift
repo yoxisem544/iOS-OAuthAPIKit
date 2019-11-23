@@ -47,4 +47,8 @@ extension Reactive where Base == API.NetworkClient {
         return attemptRequest(of: request).decode(to: Request.ResponseType.self)
     }
 
+    public func request<Request: TargetType & ImmutableMappableResponse & RetryableRquest>(_ request: Request) -> Single<Request.ResponseType> {
+        return attemptRequest(of: request).decode(to: Request.ResponseType.self)
+    }
+
 }

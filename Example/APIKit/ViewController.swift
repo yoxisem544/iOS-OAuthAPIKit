@@ -20,13 +20,29 @@ class ViewController: UIViewController {
 
 //        API.sharedd.request(SampleReqeust.Auth.RefreshAccessToken())
         
-        API.sharedd.request(SampleReqeust.Ya.GetYA())
-            .done({ json in
-                print(json)
+//        API.sharedd.request(SampleReqeust.Ya.GetYA())
+//            .done({ json in
+//                print(json)
+//            })
+//            .catch({ e in
+//                print(e)
+//            })
+
+        API.stubbing().setSuccess(mockData: """
+            {
+                "username": "John",
+                "id": 123,
+            }
+            """.data(using: .utf8)!)
+            .request(SampleReqeust.Ya.GetYA())
+            .done({ user in
+
             })
             .catch({ e in
-                print(e)
+
             })
+
+
 
     }
 

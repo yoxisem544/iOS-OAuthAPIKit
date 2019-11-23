@@ -9,8 +9,8 @@
 import ObjectMapper
 
 struct User {
-    let name: String
-    let id: String
+    var name: String?
+    var id: String?
 
     enum CodingKeys: String, CodingKey {
         case name, id
@@ -25,10 +25,20 @@ extension User: Decodable {
     }
 }
 
+//extension User: Mappable {
+//    init?(map: Map) {
+//
+//    }
+//
+//    mutating func mapping(map: Map) {
+//        name <- map["name"]
+//        id <- map["id"]
+//    }
+//}
+
 extension User: ImmutableMappable {
     init(map: Map) throws {
         name = try map.value("name")
         id = try map.value("id")
     }
 }
-

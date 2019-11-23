@@ -19,11 +19,27 @@ extension API.NetworkClient {
             .map(Request.ResponseType.self)
     }
 
+    public func request<Request: TargetType & ImmutableMappableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
+        return perform(request, on: requestQueue)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .map(Request.ResponseType.self)
+    }
+
 }
 
 extension Promise where T == Response {
 
-    internal func map<ResponseType: BaseMappable>(_ type: ResponseType.Type) -> Promise<ResponseType> {
+    internal func map<ResponseType: Mappable>(_ type: ResponseType.Type) -> Promise<ResponseType> {
+        return then({ response -> Promise<ResponseType> in
+            do {
+                return .value(try response.map(type))
+            } catch {
+                throw API.NetworkClientError.decodingError(error: error)
+            }
+        })
+    }
+
+    internal func map<ResponseType: ImmutableMappable>(_ type: ResponseType.Type) -> Promise<ResponseType> {
         return then({ response -> Promise<ResponseType> in
             do {
                 return .value(try response.map(type))

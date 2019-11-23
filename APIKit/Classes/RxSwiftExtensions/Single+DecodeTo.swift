@@ -22,7 +22,17 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         })
     }
 
-    internal func decode<T: BaseMappable>(to type: T.Type) -> Single<T> {
+    internal func decode<T: Mappable>(to type: T.Type) -> Single<T> {
+        return flatMap({ response -> Single<T> in
+            do {
+                return .just(try response.map(type))
+            } catch {
+                throw API.NetworkClientError.decodingError(error: error)
+            }
+        })
+    }
+
+    internal func decode<T: ImmutableMappable>(to type: T.Type) -> Single<T> {
         return flatMap({ response -> Single<T> in
             do {
                 return .just(try response.map(type))

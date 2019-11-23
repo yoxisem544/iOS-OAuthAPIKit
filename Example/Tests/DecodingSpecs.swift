@@ -11,7 +11,7 @@ import Nimble
 import APIKit
 import PromiseKit
 
-let userMockData = """
+fileprivate let userMockData = """
 {
     "username": "John",
     "user_id": "12398u219898u",
@@ -20,7 +20,7 @@ let userMockData = """
 
 class DecodingSpecs: QuickSpec {
 
-    var user: User?
+    var user: Userr?
     var error: Error?
 
     override func spec() {

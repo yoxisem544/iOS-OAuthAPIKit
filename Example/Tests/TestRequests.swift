@@ -20,8 +20,8 @@ public struct TestRequest {}
 extension TestRequest {
 
     struct Users {
-        struct GetProfile: TestRequestType, MappableResponse {
-            typealias ResponseType = User
+        struct GetProfile: TestRequestType, ImmutableMappableResponse {
+            typealias ResponseType = Userr
             
             var path: String { return "get" }
             var method: Method { return .get }
@@ -33,7 +33,7 @@ extension TestRequest {
             }
         }
 
-        struct RetryGetProfile: TestRequestType, MappableResponse, RetryableRquest {
+        struct RetryGetProfile: TestRequestType, ImmutableMappableResponse, RetryableRquest {
             typealias ResponseType = RetryProfile
 
             var path: String { return "post22" }

@@ -37,4 +37,10 @@ extension API.NetworkClient {
             .map(Request.ResponseType.self)
     }
 
+    public func request<Request: TargetType & ImmutableMappableResponse & AuthRequest>(_ request: Request) -> Promise<Request.ResponseType> {
+        return perform(request, on: authRequestQueue)
+            .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .map(Request.ResponseType.self)
+    }
+
 }
