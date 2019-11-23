@@ -30,19 +30,19 @@ extension API.NetworkClient {
     }
 
     public func request<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<JSON> {
-        return attemptRequest(retryingRequest).mapJSON()
+        return attemptRequest(retryingRequest).decodeToJSON()
     }
 
     public func request<Request: TargetType & DecodableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attemptRequest(retryingRequest).map(Request.ResponseType.self)
+        return attemptRequest(retryingRequest).decode(to: Request.ResponseType.self)
     }
 
     public func request<Request: TargetType & MappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attemptRequest(retryingRequest).map(Request.ResponseType.self)
+        return attemptRequest(retryingRequest).decode(to: Request.ResponseType.self)
     }
 
     public func request<Request: TargetType & ImmutableMappableResponse & RetryableRquest>(_ retryingRequest: Request) -> Promise<Request.ResponseType> {
-        return attemptRequest(retryingRequest).map(Request.ResponseType.self)
+        return attemptRequest(retryingRequest).decode(to: Request.ResponseType.self)
     }
 
 }
