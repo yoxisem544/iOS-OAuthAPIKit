@@ -12,9 +12,13 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		6314A221238243F8006B964F /* SampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6314A220238243F8006B964F /* SampleRequest.swift */; };
 		6314A22523824D54006B964F /* SampleRequest+Ya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6314A22423824D54006B964F /* SampleRequest+Ya.swift */; };
+		631561C32387F4DC00A9BC18 /* TestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631561C22387F4DC00A9BC18 /* TestRequests.swift */; };
+		631561C52387F5B900A9BC18 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631561C42387F5B900A9BC18 /* User.swift */; };
+		6325AD912389405000EEB0A8 /* RetryProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6325AD8F2389404B00EEB0A8 /* RetryProfile.swift */; };
+		63762B032387FDCD00073B38 /* RetrySpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63762B022387FDCD00073B38 /* RetrySpecs.swift */; };
+		63762B052387FE4700073B38 /* NetworkTrafficPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63762B042387FE4700073B38 /* NetworkTrafficPlugin.swift */; };
 		6379B42F2387F3C200A0DAF3 /* DecodingSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379B42E2387F3C200A0DAF3 /* DecodingSpecs.swift */; };
 		63FAA49123853DC400E86ED1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FAA49023853DC400E86ED1 /* User.swift */; };
 		7407D4A3A6A4B60D256A1504 /* Pods_APIKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2177EDF36F8678F720D29D8E /* Pods_APIKit_Example.framework */; };
@@ -44,9 +48,13 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* APIKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6314A220238243F8006B964F /* SampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRequest.swift; sourceTree = "<group>"; };
 		6314A22423824D54006B964F /* SampleRequest+Ya.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleRequest+Ya.swift"; sourceTree = "<group>"; };
+		631561C22387F4DC00A9BC18 /* TestRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequests.swift; sourceTree = "<group>"; };
+		631561C42387F5B900A9BC18 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6325AD8F2389404B00EEB0A8 /* RetryProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryProfile.swift; sourceTree = "<group>"; };
+		63762B022387FDCD00073B38 /* RetrySpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrySpecs.swift; sourceTree = "<group>"; };
+		63762B042387FE4700073B38 /* NetworkTrafficPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTrafficPlugin.swift; sourceTree = "<group>"; };
 		6379B42E2387F3C200A0DAF3 /* DecodingSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingSpecs.swift; sourceTree = "<group>"; };
 		63FAA49023853DC400E86ED1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76EC0FD56C7A46D453FE2C34 /* Pods-APIKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-APIKit_Tests/Pods-APIKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,8 +134,9 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				631561C62387F5C000A9BC18 /* Test Data */,
 				6379B42E2387F3C200A0DAF3 /* DecodingSpecs.swift */,
+				63762B022387FDCD00073B38 /* RetrySpecs.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -149,6 +158,17 @@
 				B5542DBB097C1AB3C1E0878E /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		631561C62387F5C000A9BC18 /* Test Data */ = {
+			isa = PBXGroup;
+			children = (
+				631561C22387F4DC00A9BC18 /* TestRequests.swift */,
+				6325AD8F2389404B00EEB0A8 /* RetryProfile.swift */,
+				631561C42387F5B900A9BC18 /* User.swift */,
+				63762B042387FE4700073B38 /* NetworkTrafficPlugin.swift */,
+			);
+			name = "Test Data";
 			sourceTree = "<group>";
 		};
 		820B308A8B83BB933282445C /* Pods */ = {
@@ -390,8 +410,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				6325AD912389405000EEB0A8 /* RetryProfile.swift in Sources */,
+				631561C52387F5B900A9BC18 /* User.swift in Sources */,
+				63762B052387FE4700073B38 /* NetworkTrafficPlugin.swift in Sources */,
+				631561C32387F4DC00A9BC18 /* TestRequests.swift in Sources */,
 				6379B42F2387F3C200A0DAF3 /* DecodingSpecs.swift in Sources */,
+				63762B032387FDCD00073B38 /* RetrySpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

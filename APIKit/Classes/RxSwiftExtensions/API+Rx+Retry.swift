@@ -14,8 +14,8 @@ extension Reactive where Base == API.NetworkClient {
 
     public func attemptRequest<Request: TargetType & RetryableRquest>(of request: Request) -> Single<Response> {
         return performRequest(of: request)
-            .retry(request.retryBehavior)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
+            .retry(request.retryBehavior)
     }
 
 }
