@@ -8,10 +8,6 @@
 
 import RxSwift
 
-enum SingleRetryWithBehaviorError : Error {
-    case currentAttemptInvalid
-}
-
 extension PrimitiveSequence where Trait == SingleTrait {
 
     /**
@@ -34,7 +30,7 @@ extension PrimitiveSequence where Trait == SingleTrait {
      - returns: Observable sequence that will be automatically repeat if error occurred
      */
     internal func retry(_ currentAttempt: UInt, behavior: RepeatBehavior, scheduler: SchedulerType = MainScheduler.instance, shouldRetry: RetryPredicate? = nil) -> Single<Element> {
-        guard currentAttempt > 0 else { return Single.error(SingleRetryWithBehaviorError.currentAttemptInvalid) }
+        guard currentAttempt > 0 else { return Single.error(RetryWithBehaviorError.currentAttemptInvalid) }
 
         // calculate conditions for bahavior
         let conditions = behavior.calculateConditions(currentAttempt)
