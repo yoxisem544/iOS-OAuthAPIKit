@@ -8,7 +8,13 @@
 
 import PromiseKit
 
-func attempt<T>(maximumRetryCount: Int = 3, delayBeforeRetry: DispatchTimeInterval = .seconds(2), _ body: @escaping () -> Promise<T>) -> Promise<T> {
+/// Attempt to retry for couple of times.
+///
+/// - Parameters:
+///   - maximumRetryCount: retry times, if retry time is 0, promise will be exexute only once.
+///   - delayBeforeRetry: delay time.
+///   - body: a promise to attempt.
+func attempt<T>(maximumRetryCount: UInt = 3, delayBeforeRetry: DispatchTimeInterval = .seconds(2), _ body: @escaping () -> Promise<T>) -> Promise<T> {
     var attempts = 0
     func attempt() -> Promise<T> {
         attempts += 1

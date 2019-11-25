@@ -24,7 +24,7 @@ class PromiseAttemptSpecs: QuickSpec {
 
             it("should retry 5 time then fail") {
                 waitUntil(timeout: 10, action: { done in
-                    attempt(maximumRetryCount: 5, delayBeforeRetry: .seconds(1), {
+                    attempt(maximumRetryCount: 5, delayBeforeRetry: .milliseconds(100), {
                         promiseWillFail()
                     })
                     .done({
@@ -37,7 +37,33 @@ class PromiseAttemptSpecs: QuickSpec {
                 })
             }
 
-//            RepeatBehavior.
+            it("should at least execute once when retry times is 0") {
+                waitUntil(timeout: 3, action: { done in
+                    attempt(maximumRetryCount: 0, delayBeforeRetry: .milliseconds(200), {
+                        promiseWillFail()
+                    })
+                    .done({
+                        fail("done will never be executed since promise will always fail")
+                    })
+                    .catch({ e in
+                        expect(failHandShack).to(equal(1)) // attempt with 0 times will at least execute promise once.
+                        done()
+                    })
+                })
+            }
+
+            it("should try once if retry count is 0 when using repeat behavior") {
+                waitUntil(timeout: 3, action: { done in
+                    attempt(RepeatBehavior.immediate(maxCount: 0), { promiseWillFail() })
+                    .done({
+                        fail("done will never be executed since promise will always fail")
+                    })
+                    .catch({ e in
+                        expect(failHandShack).to(equal(1)) // attempt with 0 times will at least execute promise once.
+                        done()
+                    })
+                })
+            }
 
         }
 
