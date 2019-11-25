@@ -22,6 +22,7 @@
 		63363C4E2389649E00B236AE /* PromiseAttemptSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63363C4C2389649A00B236AE /* PromiseAttemptSpecs.swift */; };
 		635763ED238B769D00ADF5EC /* MockResponseSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635763EC238B769D00ADF5EC /* MockResponseSpecs.swift */; };
 		635763F1238BC61000ADF5EC /* Rx+RepeatBehaviorSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635763F0238BC61000ADF5EC /* Rx+RepeatBehaviorSpecs.swift */; };
+		635763F3238BE22100ADF5EC /* RequestGetterSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635763F2238BE22100ADF5EC /* RequestGetterSpecs.swift */; };
 		63762B032387FDCD00073B38 /* RetrySpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63762B022387FDCD00073B38 /* RetrySpecs.swift */; };
 		63762B052387FE4700073B38 /* NetworkTrafficPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63762B042387FE4700073B38 /* NetworkTrafficPlugin.swift */; };
 		6379B42F2387F3C200A0DAF3 /* DecodingSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379B42E2387F3C200A0DAF3 /* DecodingSpecs.swift */; };
@@ -63,6 +64,7 @@
 		63363C4C2389649A00B236AE /* PromiseAttemptSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseAttemptSpecs.swift; sourceTree = "<group>"; };
 		635763EC238B769D00ADF5EC /* MockResponseSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResponseSpecs.swift; sourceTree = "<group>"; };
 		635763F0238BC61000ADF5EC /* Rx+RepeatBehaviorSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+RepeatBehaviorSpecs.swift"; sourceTree = "<group>"; };
+		635763F2238BE22100ADF5EC /* RequestGetterSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestGetterSpecs.swift; sourceTree = "<group>"; };
 		63762B022387FDCD00073B38 /* RetrySpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrySpecs.swift; sourceTree = "<group>"; };
 		63762B042387FE4700073B38 /* NetworkTrafficPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTrafficPlugin.swift; sourceTree = "<group>"; };
 		6379B42E2387F3C200A0DAF3 /* DecodingSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingSpecs.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				63363C4C2389649A00B236AE /* PromiseAttemptSpecs.swift */,
 				635763EC238B769D00ADF5EC /* MockResponseSpecs.swift */,
 				635763F0238BC61000ADF5EC /* Rx+RepeatBehaviorSpecs.swift */,
+				635763F2238BE22100ADF5EC /* RequestGetterSpecs.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -442,6 +445,7 @@
 				63762B052387FE4700073B38 /* NetworkTrafficPlugin.swift in Sources */,
 				631561C32387F4DC00A9BC18 /* TestRequests.swift in Sources */,
 				635763ED238B769D00ADF5EC /* MockResponseSpecs.swift in Sources */,
+				635763F3238BE22100ADF5EC /* RequestGetterSpecs.swift in Sources */,
 				6379B42F2387F3C200A0DAF3 /* DecodingSpecs.swift in Sources */,
 				63762B032387FDCD00073B38 /* RetrySpecs.swift in Sources */,
 			);
