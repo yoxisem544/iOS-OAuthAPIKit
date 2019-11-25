@@ -48,12 +48,20 @@ class RetryGotDecodingErrorSpecs: QuickSpec {
                 let evaluate: (() -> Void) -> Void = { done in
                     expect(self.user).to(beNil())
                     expect(self.error).toNot(beNil())
+                    expect(self.error).to(beAKindOf(API.NetworkClientError.self))
                     expect(retryHandshakeCount).to(equal(1))
+
+                    if let error = self.error, case API.NetworkClientError.decodingError(error: let e) = error {
+                        _ = succeed()
+                    } else {
+                        fail("not getting a decode error")
+                    }
+
                     done()
                 }
 
                 waitUntil(timeout: 10, action: { done in
-                    API.stubbing().setSuccess(mockData: userMockData).request(TestRequest.Users.SomeRetryingRequest())
+                    API.retryClient.request(TestRequest.Users.SomeRetryingRequest())
                         .done({ user in
                             self.user = user
                             evaluate(done)

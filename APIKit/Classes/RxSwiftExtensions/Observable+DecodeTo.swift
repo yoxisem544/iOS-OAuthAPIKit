@@ -14,41 +14,25 @@ extension ObservableType where E == Response {
 
     internal func decodeToJSON() -> Observable<JSON> {
         return flatMap({ response -> Observable<JSON> in
-            do {
-                return .just(try JSON(data: response.data))
-            } catch {
-                throw API.NetworkClientError.decodingError(error: error)
-            }
+            return .just(try response.decodeToJSON())
         })
     }
 
     internal func decode<T: Mappable>(to type: T.Type) -> Observable<T> {
         return flatMap({ response -> Observable<T> in
-            do {
-                return .just(try response.map(type))
-            } catch {
-                throw API.NetworkClientError.decodingError(error: error)
-            }
+            return .just(try response.decode(to: type))
         })
     }
 
     internal func decode<T: ImmutableMappable>(to type: T.Type) -> Observable<T> {
         return flatMap({ response -> Observable<T> in
-            do {
-                return .just(try response.map(type))
-            } catch {
-                throw API.NetworkClientError.decodingError(error: error)
-            }
+            return .just(try response.decode(to: type))
         })
     }
 
     internal func decode<T: Decodable>(to type: T.Type) -> Observable<T> {
         return flatMap({ response -> Observable<T> in
-            do {
-                return .just(try response.map(type))
-            } catch {
-                throw API.NetworkClientError.decodingError(error: error)
-            }
+            return .just(try response.decode(to: type))
         })
     }
 
