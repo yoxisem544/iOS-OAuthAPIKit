@@ -12,69 +12,56 @@ import Nimble
 import PromiseKit
 import Moya
 import ObjectMapper
+import RxSwift
 
 @testable import APIKit
 
-fileprivate let sampleMappableObjectNormalMockData = """
-{
-    "name": "Johnny Appleseed",
-    "id": "xjois210912",
-    "age": 100,
-}
-""".data(using: .utf8)!
-
-fileprivate let sampleMappableObjectCorruptMockData = """
-{
-    "name": "Johnny Appleseed,
-    "id": "xjois210912",
-    "age": 0,
-}
-""".data(using: .utf8)!
-
-fileprivate let sampleMappableObjectIncorrectAgeMockData = """
-{
-    "name": "Johnny Appleseed",
-    "id": "xjois210912",
-    "age": "0",
-}
-""".data(using: .utf8)!
-
-fileprivate struct SampleMappableObject: Mappable {
-    var name: String?
-    var id: String?
-    var age: Int = 0
-
-    init?(map: Map) {
-        guard let age = map.JSON["age"] as? Int else { return nil } // user must have a age
-        guard age > 0 else { return nil } // fail when age is smaller than 0
-    }
-
-    mutating func mapping(map: Map) {
-        name <- map["name"]
-        id <- map["id"]
-        age <- map["age"]
-    }
-}
-
-fileprivate struct SampleImmutableMappableObject: ImmutableMappable {
-    let name: String
-    let id: String
-    let age: Int
-
-    init(map: Map) throws {
-        name = try map.value("name")
-        id = try map.value("id")
-        age = try map.value("age")
-    }
-}
-
 class MockResponseSpecs: QuickSpec {
+
+    var disposeBag: DisposeBag!
 
     override func spec() {
 
         beforeEach {
-
+            self.disposeBag = DisposeBag()
         }
+
+        // MARK: - Testing Plain JSON Parsing
+
+        context("Testing JSON parsing") {
+            it("should successfully decode when json is ok") {
+
+            }
+
+            it("should successfully parse a empty json without throwing error") {
+                let mockJSON = "{}".data(using: .utf8)!
+                let response = Response(statusCode: 200, data: mockJSON)
+                do {
+                    _ = try response.decodeToJSON()
+                    _ = succeed()
+                } catch {
+                    fail("should not get an error, parsing {} JSON should always succeed.")
+                }
+            }
+
+            it("should fail to decode json if Data is empty") {
+                let mockJSON = "".data(using: .utf8)!
+                let response = Response(statusCode: 200, data: mockJSON)
+                do {
+                    _ = try response.decodeToJSON()
+                    fail("should not get an error, parsing empty JSON should NEVER succeed.")
+                } catch {
+                    expect(error).to(beAKindOf(API.NetworkClientError.self))
+                    if case API.NetworkClientError.decodingError(error: _) = error {
+                        _ = succeed()
+                    } else {
+                        fail("this error should be a decoding error")
+                    }
+                }
+            }
+        }
+
+        // MARK: - Testing Reponse parsing
 
         describe("Mocking Moya Response") {
             context("Decoding to JSON") {
@@ -191,71 +178,342 @@ class MockResponseSpecs: QuickSpec {
                     }
                 }
 
-                context("Decoding to Decodable") {}
+                context("Decoding to Decodable") {
+                    it("should successfully decode when json is ok") {
+                        let mockJSON = sampleMappableObjectNormalMockData
+                        let response = Response(statusCode: 200, data: mockJSON)
+                        do {
+                            _ = try response.decode(to: SampleDecodableObject.self)
+                            _ = succeed()
+                        } catch {
+                            fail("should not get a error if json is valid for decoding")
+                        }
+                    }
+
+                    it("should fail to decode if JSON is corrupted.") {
+                        let mockJSON = sampleMappableObjectCorruptMockData
+                        let response = Response(statusCode: 200, data: mockJSON)
+                        do {
+                            _ = try response.decode(to: SampleDecodableObject.self)
+                            fail("When encounter a corrupted JSON, you should get an error when decoding")
+                        } catch {
+                            if case API.NetworkClientError.decodingError = error {
+                                _ = succeed()
+                            } else {
+                                fail("Error should be decoding error!")
+                            }
+                        }
+                    }
+
+                    it("should fail to decode if age is incorrect.") {
+                        let mockJSON = sampleMappableObjectIncorrectAgeMockData
+                        let response = Response(statusCode: 200, data: mockJSON)
+                        do {
+                            _ = try response.decode(to: SampleDecodableObject.self)
+                            fail("When encounter a corrupted JSON, you should get an error when decoding")
+                        } catch {
+                            if case API.NetworkClientError.decodingError(error: let e) = error {
+                                if case MoyaError.objectMapping(let mappingError, _) = e {
+                                    expect(mappingError).to(beAKindOf(DecodingError.self))
+                                    _ = succeed()
+                                } else {
+                                    fail("should get an ObjectMapper MapError struct here")
+                                }
+                            } else {
+                                fail("Error should be decoding error!")
+                            }
+                        }
+                    }
+                }
             }
         }
 
         describe("Mocking Moya Response with Promise") {
             context("Decoding to JSON") {
-                it("should successfully parse a empty json without throwing error") {
+                it("should just success") {
                     let mockJSON = "{}".data(using: .utf8)!
                     let response = Response(statusCode: 200, data: mockJSON)
-                    waitUntil(timeout: 5, action: { done in
+                    waitUntil(timeout: 3, action: { done in
                         Promise.value(response)
-                        .decodeToJSON()
-                        .done({ json in
-                            done()
-                        })
-                        .catch({ e in
-                            fail("should not get an error, parsing {} JSON should always succeed.")
-                            done()
-                        })
-                    })
-                }
-
-                it("should fail to decode json if Data is empty") {
-                    let mockJSON = "".data(using: .utf8)!
-                    let response = Response(statusCode: 200, data: mockJSON)
-                    waitUntil(timeout: 5, action: { done in
-                        Promise.value(response)
-                        .decodeToJSON()
-                        .done({ json in
-                            fail("should not get an error, parsing empty JSON should NEVER succeed.")
-                            done()
-                        })
-                        .catch({ e in
-                            expect(e).to(beAKindOf(API.NetworkClientError.self))
-                            if case API.NetworkClientError.decodingError(error: _) = e {
+                            .decodeToJSON()
+                            .done({ json in
                                 _ = succeed()
-                            } else {
-                                fail("this error should be a decoding error")
-                            }
-                            done()
-                        })
+                                done()
+                            })
+                            .catch({ e in
+                                fail("parsing an empty json should never fail")
+                            })
                     })
                 }
             }
 
             context("Decoding to Mappable") {
-
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+                    waitUntil(timeout: 3, action: { done in
+                        Promise.value(response)
+                            .decode(to: SampleMappableObject.self)
+                            .done({ json in
+                                _ = succeed()
+                                done()
+                            })
+                            .catch({ e in
+                                fail("parsing an empty json should never fail")
+                            })
+                    })
+                }
             }
 
             context("Decoding to ImmutableMappable") {
-
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+                    waitUntil(timeout: 3, action: { done in
+                        Promise.value(response)
+                            .decode(to: SampleImmutableMappableObject.self)
+                            .done({ json in
+                                _ = succeed()
+                                done()
+                            })
+                            .catch({ e in
+                                fail("parsing an empty json should never fail")
+                            })
+                    })
+                }
             }
 
             context("Decoding to Decodable") {
-
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+                    waitUntil(timeout: 3, action: { done in
+                        Promise.value(response)
+                            .decode(to: SampleDecodableObject.self)
+                            .done({ json in
+                                _ = succeed()
+                                done()
+                            })
+                            .catch({ e in
+                                fail("parsing an empty json should never fail")
+                            })
+                    })
+                }
             }
         }
 
-        describe("Mocking Moya Response with RxSwift") {
-            context("Decoding to JSON") {}
-            context("Decoding to Mappable") {}
-            context("Decoding to ImmutableMappable") {}
-            context("Decoding to Decodable") {}
+        describe("Mocking Moya Response with Single") {
+            context("Decoding to JSON") {
+                it("should just success") {
+                    let mockJSON = "{}".data(using: .utf8)!
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Single.just(response)
+                            .decodeToJSON()
+                            .subscribe(onSuccess: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+
+            context("Decoding to Mappable") {
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Single.just(response)
+                            .decode(to: SampleMappableObject.self)
+                            .subscribe(onSuccess: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+
+            context("Decoding to ImmutableMappable") {
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Single.just(response)
+                            .decode(to: SampleImmutableMappableObject.self)
+                            .subscribe(onSuccess: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+
+            context("Decoding to Decodable") {
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Single.just(response)
+                            .decode(to: SampleDecodableObject.self)
+                            .subscribe(onSuccess: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+        }
+
+        describe("Mocking Moya Response with Observable") {
+            context("Decoding to JSON") {
+                it("should just success") {
+                    let mockJSON = "{}".data(using: .utf8)!
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Observable.just(response)
+                            .decodeToJSON()
+                            .subscribe(onNext: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+
+            context("Decoding to Mappable") {
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Observable.just(response)
+                            .decode(to: SampleMappableObject.self)
+                            .subscribe(onNext: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+
+            context("Decoding to ImmutableMappable") {
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Observable.just(response)
+                            .decode(to: SampleImmutableMappableObject.self)
+                            .subscribe(onNext: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
+
+            context("Decoding to Decodable") {
+                it("should just success") {
+                    let mockJSON = sampleMappableObjectNormalMockData
+                    let response = Response(statusCode: 200, data: mockJSON)
+
+                    waitUntil(timeout: 3, action: { done in
+                        Observable.just(response)
+                            .decode(to: SampleDecodableObject.self)
+                            .subscribe(onNext: { json in
+                                _ = succeed()
+                                done()
+                            })
+                            .disposed(by: self.disposeBag)
+                    })
+                }
+            }
         }
 
     }
 
+}
+
+// MARK: - Mock data
+
+fileprivate let sampleMappableObjectNormalMockData = """
+{
+    "name": "Johnny Appleseed",
+    "id": "xjois210912",
+    "age": 100,
+}
+""".data(using: .utf8)!
+
+fileprivate let sampleMappableObjectCorruptMockData = """
+{
+    "name": "Johnny Appleseed,
+    "id": "xjois210912",
+    "age": 0,
+}
+""".data(using: .utf8)!
+
+fileprivate let sampleMappableObjectIncorrectAgeMockData = """
+{
+    "name": "Johnny Appleseed",
+    "id": "xjois210912",
+    "age": "0",
+}
+""".data(using: .utf8)!
+
+fileprivate struct SampleMappableObject: Mappable {
+    var name: String?
+    var id: String?
+    var age: Int = 0
+
+    init?(map: Map) {
+        guard let age = map.JSON["age"] as? Int else { return nil } // user must have a age
+        guard age > 0 else { return nil } // fail when age is smaller than 0
+    }
+
+    mutating func mapping(map: Map) {
+        name <- map["name"]
+        id <- map["id"]
+        age <- map["age"]
+    }
+}
+
+fileprivate struct SampleImmutableMappableObject: ImmutableMappable {
+    let name: String
+    let id: String
+    let age: Int
+
+    init(map: Map) throws {
+        name = try map.value("name")
+        id = try map.value("id")
+        age = try map.value("age")
+    }
+}
+
+fileprivate struct SampleDecodableObject: Decodable {
+    let name: String
+    let id: String
+    let age: Int
+
+    enum CodingKeys: String, CodingKey {
+        case name, id, age
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        id = try container.decode(String.self, forKey: .id)
+        age = try container.decode(Int.self, forKey: .age)
+    }
 }

@@ -35,7 +35,8 @@ extension TestRequest {
 
         struct RetryGetProfile: TestRequestType, ImmutableMappableResponse, RetryableRquest {
             typealias ResponseType = RetryProfile
-
+            
+            var retryBehavior: RepeatBehavior { return .delayed(maxCount: 3, time: 0.1) }
             var path: String { return "post22" }
             var method: Method { return .post }
             var parameters: [String : Any] {
