@@ -1,12 +1,12 @@
 PODS:
   - Alamofire (4.9.1)
-  - APIKit/Core (1.0.1):
+  - APIKit/Core (1.2.1):
     - Alamofire (~> 4.9)
     - Moya (~> 13.0)
     - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - APIKit/RxSwift (1.0.1):
+  - APIKit/RxSwift (1.2.1):
     - Alamofire (~> 4.9)
     - APIKit/Core
     - Moya (~> 13.0)
@@ -22,7 +22,7 @@ PODS:
   - Moya/RxSwift (13.0.1):
     - Moya/Core
     - RxSwift (~> 4.0)
-  - Nimble (8.0.4)
+  - Nimble (7.3.4)
   - ObjectMapper (3.5.1)
   - PromiseKit (6.12.0):
     - PromiseKit/CorePromise (= 6.12.0)
@@ -35,13 +35,28 @@ PODS:
     - PromiseKit/CorePromise
   - Quick (2.2.0)
   - Result (4.1.0)
+  - RxBlocking (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxNimble (4.4.0):
+    - RxNimble/RxBlocking (= 4.4.0)
+  - RxNimble/Core (4.4.0):
+    - Nimble (~> 7.0)
+    - RxSwift (~> 4.2)
+  - RxNimble/RxBlocking (4.4.0):
+    - RxBlocking
+    - RxNimble/Core
   - RxSwift (4.5.0)
+  - RxTest (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - APIKit/RxSwift (from `../`)
-  - Nimble (~> 8.0)
+  - Nimble (~> 7.0)
   - Quick (~> 2.0)
+  - RxBlocking (~> 4.0)
+  - RxNimble (~> 4.0)
+  - RxTest (~> 4.0)
 
 SPEC REPOS:
   https://cdn.cocoapods.org/:
@@ -52,7 +67,10 @@ SPEC REPOS:
     - PromiseKit
     - Quick
     - Result
+    - RxBlocking
+    - RxNimble
     - RxSwift
+    - RxTest
     - SwiftyJSON
 
 EXTERNAL SOURCES:
@@ -61,16 +79,19 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  APIKit: 744c74148c42142f773819697ed3d621c4a37c8c
+  APIKit: fb873a62c7af7ed1ed8fde105ab3857202618230
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
-  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
+  RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
+  RxNimble: ba6caf0195c37fd50dd4b967624b66ff580d781a
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 7f521659164b5c3aa616154cab1facbd2cef1f63
+PODFILE CHECKSUM: a36a6c9bf8fc51b87e494df0d089da016117c02a
 
 COCOAPODS: 1.8.4

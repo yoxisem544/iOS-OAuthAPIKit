@@ -68,6 +68,9 @@ extension RepeatBehavior {
             // return specified delay
             return (maxCount: max, delay: .milliseconds(Int(time * 1000)))
         case .exponentialDelayed(let max, let initial, let multiplier):
+            if multiplier <= 1.0 {
+                assertionFailure("multiplier smaller than 1.0 will cause delay time to decrease, consider makign multiplier greater than 1.0")
+            }
             // if it's first attempt, simply use initial delay, otherwise calculate delay
             guard currentRepetition != 0 else { fatalError("RepeatBehavior currentRepetition should never start with 0") }
             let delay = currentRepetition == 1 ? initial : initial * pow(multiplier, Double(currentRepetition - 1))
