@@ -3,9 +3,14 @@
 # * https://github.com/supermarin/xcpretty#usage
 
 os: osx
-osx_image: xcode11.2.1
+osx_image: xcode11.2
 language: swift
-cache: cocoapods
+cache:
+  bundler: true
+  cocoapods: true
+  directories:
+     - /home/travis/.rvm/
+
 podfile: Example/Podfile
 
 rvm:
