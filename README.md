@@ -1,9 +1,9 @@
-# APIKit
+# OAuthAPIKit
 
-[![CI Status](https://img.shields.io/travis/yoxisem544/APIKit.svg?style=flat)](https://travis-ci.org/yoxisem544/APIKit)
-[![Version](https://img.shields.io/cocoapods/v/APIKit.svg?style=flat)](https://cocoapods.org/pods/APIKit)
-[![License](https://img.shields.io/cocoapods/l/APIKit.svg?style=flat)](https://cocoapods.org/pods/APIKit)
-[![Platform](https://img.shields.io/cocoapods/p/APIKit.svg?style=flat)](https://cocoapods.org/pods/APIKit)
+[![CI Status](https://img.shields.io/travis/yoxisem544/OAuthAPIKit.svg?style=flat)](https://travis-ci.org/yoxisem544/OAuthAPIKit)
+[![Version](https://img.shields.io/cocoapods/v/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
+[![License](https://img.shields.io/cocoapods/l/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
+[![Platform](https://img.shields.io/cocoapods/p/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
 
 ## Example
 
@@ -13,11 +13,11 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-APIKit is available through [CocoaPods](https://cocoapods.org). To install
+OAuthAPIKit is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'APIKit'
+pod 'OAuthAPIKit'
 ```
 
 ## Author
@@ -26,4 +26,4 @@ yoxisem544, yoxisem544@gmail.com
 
 ## License
 
-APIKit is available under the MIT license. See the LICENSE file for more info.
+OAuthAPIKit is available under the MIT license. See the LICENSE file for more info.
