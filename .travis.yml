@@ -2,10 +2,14 @@
 # * https://www.objc.io/issues/6-build-tools/travis-ci/
 # * https://github.com/supermarin/xcpretty#usage
 
+os: osx
 osx_image: xcode11.2.1
 language: swift
 cache: cocoapods
 podfile: Example/Podfile
+
+rvm:
+  - 2.6.3
 
 branches:
   only:
