@@ -9,7 +9,7 @@ cache:
   bundler: true
   cocoapods: true
   directories:
-     - /home/travis/.rvm/
+     - /Users/travis/.rvm/
      - vendor/bundler
 
 podfile: Example/Podfile
