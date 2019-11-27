@@ -9,7 +9,7 @@ cache:
   bundler: true
   cocoapods: true
   directories:
-     - /home/travis/.rvm/
+     - /Users/travis/.rvm/
      - vendor/bundler
 
 podfile: Example/Podfile
@@ -21,6 +21,7 @@ branches:
   only:
     - develop
     - feature/*
+    - release/*
 
 before_install:
   - gem install bundler:2.0.1
