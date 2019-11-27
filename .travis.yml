@@ -17,6 +17,7 @@ branches:
     - feature/*
 
 before_install:
+  - gem install bundler:2.0.1
   - bundle install
 # - gem install cocoapods # Since Travis is not always on latest version
 # - pod install --project-directory=Example
