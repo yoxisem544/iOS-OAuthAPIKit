@@ -21,6 +21,7 @@ branches:
   only:
     - develop
     - feature/*
+    - release/*
 
 before_install:
   - gem install bundler:2.0.1
