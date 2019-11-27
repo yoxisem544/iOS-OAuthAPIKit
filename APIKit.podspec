@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint NetworkRequestKit.podspec' to ensure this is a
+# Be sure to run `pod lib lint APIKit.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,8 +7,8 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'NetworkRequestKit'
-  s.version          = '3.0.0'
+  s.name             = 'APIKit'
+  s.version          = '3.0.1'
   s.summary          = 'An Elegant OAuth RESTful API framework.'
 
 # This description is used to generate tags and improve search results.
@@ -45,7 +45,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.framework  = "Foundation"
-    ss.source_files  = "NetworkRequestKit/Classes/Core/**/*"
+    ss.source_files  = "APIKit/Classes/Core/**/*"
     s.dependency 'Alamofire', '~> 4.9'
     s.dependency 'Moya', '~> 13.0'
     s.dependency 'ObjectMapper', '~> 3.5'
@@ -54,8 +54,8 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "RxSwift" do |ss|
-    ss.source_files = "NetworkRequestKit/Classes/RxSwiftExtensions/**/*"
-    ss.dependency "NetworkRequestKit/Core"
+    ss.source_files = "APIKit/Classes/RxSwiftExtensions/**/*"
+    ss.dependency "APIKit/Core"
     ss.dependency "Moya/RxSwift"
   end
 end

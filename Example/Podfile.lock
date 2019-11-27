@@ -1,5 +1,19 @@
 PODS:
   - Alamofire (4.9.1)
+  - APIKit/Core (3.0.1):
+    - Alamofire (~> 4.9)
+    - Moya (~> 13.0)
+    - ObjectMapper (~> 3.5)
+    - PromiseKit (~> 6.12)
+    - SwiftyJSON (~> 5.0)
+  - APIKit/RxSwift (3.0.1):
+    - Alamofire (~> 4.9)
+    - APIKit/Core
+    - Moya (~> 13.0)
+    - Moya/RxSwift
+    - ObjectMapper (~> 3.5)
+    - PromiseKit (~> 6.12)
+    - SwiftyJSON (~> 5.0)
   - Moya (13.0.1):
     - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
@@ -8,20 +22,6 @@ PODS:
   - Moya/RxSwift (13.0.1):
     - Moya/Core
     - RxSwift (~> 4.0)
-  - NetworkRequestKit/Core (3.0.0):
-    - Alamofire (~> 4.9)
-    - Moya (~> 13.0)
-    - ObjectMapper (~> 3.5)
-    - PromiseKit (~> 6.12)
-    - SwiftyJSON (~> 5.0)
-  - NetworkRequestKit/RxSwift (3.0.0):
-    - Alamofire (~> 4.9)
-    - Moya (~> 13.0)
-    - Moya/RxSwift
-    - NetworkRequestKit/Core
-    - ObjectMapper (~> 3.5)
-    - PromiseKit (~> 6.12)
-    - SwiftyJSON (~> 5.0)
   - Nimble (7.3.4)
   - ObjectMapper (3.5.1)
   - PromiseKit (6.12.0):
@@ -51,7 +51,7 @@ PODS:
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
-  - NetworkRequestKit/RxSwift (from `../`)
+  - APIKit/RxSwift (from `../`)
   - Nimble (~> 7.0)
   - Quick (~> 2.0)
   - RxBlocking (~> 4.0)
@@ -59,7 +59,7 @@ DEPENDENCIES:
   - RxTest (~> 4.0)
 
 SPEC REPOS:
-  https://cdn.cocoapods.org/:
+  trunk:
     - Alamofire
     - Moya
     - Nimble
@@ -74,13 +74,13 @@ SPEC REPOS:
     - SwiftyJSON
 
 EXTERNAL SOURCES:
-  NetworkRequestKit:
+  APIKit:
     :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  APIKit: 59816fc9980818fc56e49ceb225c993cd0784b10
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
-  NetworkRequestKit: 4e340eacb985d52e517e0afbffd265dce6dbb637
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
@@ -92,6 +92,6 @@ SPEC CHECKSUMS:
   RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: ce4dcb5de05d0d2768148e0e949258ee5784daca
+PODFILE CHECKSUM: a36a6c9bf8fc51b87e494df0d089da016117c02a
 
 COCOAPODS: 1.8.4
