@@ -37,4 +37,6 @@ Carthage/Build
 #
 # Pods/
 
-# fastlane
+# Fastlane
+fastlane/report.xml
+fastlane/test_output

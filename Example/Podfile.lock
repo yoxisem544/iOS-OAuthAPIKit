@@ -9,13 +9,13 @@ PODS:
     - Moya/Core
     - RxSwift (~> 4.0)
   - Nimble (7.3.4)
-  - OAuthAPIKit/Core (3.0.0):
+  - OAuthAPIKit/Core (3.0.2):
     - Alamofire (~> 4.9)
     - Moya (~> 13.0)
     - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - OAuthAPIKit/RxSwift (3.0.0):
+  - OAuthAPIKit/RxSwift (3.0.2):
     - Alamofire (~> 4.9)
     - Moya (~> 13.0)
     - Moya/RxSwift
@@ -81,7 +81,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  OAuthAPIKit: fa8c4cb18b7aea8d16927c77f5d47b3cbf1dd420
+  OAuthAPIKit: d16a1378d69dc6a8eae1ac15600f3c59d78644ad
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
