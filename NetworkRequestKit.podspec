@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint APIKit.podspec' to ensure this is a
+# Be sure to run `pod lib lint NetworkRequestKit.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,8 +7,8 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'APIKit'
-  s.version          = '1.2.2'
+  s.name             = 'NetworkRequestKit'
+  s.version          = '3.0.0'
   s.summary          = 'An Elegant OAuth RESTful API framework.'
 
 # This description is used to generate tags and improve search results.
@@ -24,11 +24,11 @@ Pod::Spec.new do |s|
   Also, most complex part of OAuth 2.0 is access and refresh token. We've create a easy way for you to manage tokens. This include token refresh, request retry, retry with exponetial behavior and suspending on going requests.
                        DESC
 
-  s.homepage         = 'https://github.com/kkday-it/iOS-APIKit'
+  s.homepage         = 'https://github.com/yoxisem544/iOS-OAuthAPIKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'yoxisem544' => 'yoxisem544@gmail.com' }
-  s.source           = { :git => 'git@github.com:kkday-it/iOS-APIKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'git@github.com:yoxisem544/iOS-OAuthAPIKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.default_subspec = "Core"
@@ -45,7 +45,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.framework  = "Foundation"
-    ss.source_files  = "APIKit/Classes/Core/**/*"
+    ss.source_files  = "NetworkRequestKit/Classes/Core/**/*"
     s.dependency 'Alamofire', '~> 4.9'
     s.dependency 'Moya', '~> 13.0'
     s.dependency 'ObjectMapper', '~> 3.5'
@@ -54,8 +54,8 @@ Pod::Spec.new do |s|
   end
 
   s.subspec "RxSwift" do |ss|
-    ss.source_files = "APIKit/Classes/RxSwiftExtensions/**/*"
-    ss.dependency "APIKit/Core"
+    ss.source_files = "NetworkRequestKit/Classes/RxSwiftExtensions/**/*"
+    ss.dependency "NetworkRequestKit/Core"
     ss.dependency "Moya/RxSwift"
   end
 end
