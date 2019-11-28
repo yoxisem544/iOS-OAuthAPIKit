@@ -1,6 +1,7 @@
 # OAuthAPIKit
 
-[![CI Status](https://img.shields.io/travis/yoxisem544/OAuthAPIKit.svg?style=flat)](https://travis-ci.org/yoxisem544/OAuthAPIKit)
+[![CI Status](https://img.shields.io/travis/yoxisem544/iOS-OAuthAPIKit.svg?style=flat)](https://travis-ci.org/yoxisem544/iOS-OAuthAPIKit)
+[![codecov](https://codecov.io/gh/yoxisem544/iOS-OAuthAPIKit/branch/master/graph/badge.svg)](https://codecov.io/gh/yoxisem544/iOS-OAuthAPIKit)
 [![Version](https://img.shields.io/cocoapods/v/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
 [![License](https://img.shields.io/cocoapods/l/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
 [![Platform](https://img.shields.io/cocoapods/p/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
