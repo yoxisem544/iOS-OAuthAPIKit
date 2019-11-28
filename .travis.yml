@@ -34,4 +34,4 @@ script:
   - bundle exec fastlane test
 
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash) -t "479351f1-e1a9-468e-89c5-d28960417bcb"
