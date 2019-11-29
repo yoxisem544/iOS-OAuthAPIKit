@@ -16,9 +16,22 @@ extension API.NetworkClient: ReactiveCompatible {}
 
 extension Reactive where Base == API.NetworkClient {
 
-    internal func performRequest<Request: TargetType>(of request: Request) -> Single<Response> {
+    internal func perform<Request: TargetType>(of request: Request) -> Single<Response> {
+        if let retryBahavior = (request as? RetryableRquest)?.retryBehavior {
+            return performRequest(of: request)
+                .filterSuccessAndRedirectOrThrowNetworkClientError()
+                .retry(retryBahavior)
+        } else {
+            return performRequest(of: request)
+        }
+    }
+
+    private func performRequest<Request: TargetType>(of request: Request) -> Single<Response> {
+        let queue = { () -> DispatchQueue in
+            return request is AuthRequest ? authRequestQueue : self.base.requestQueue
+        }()
         let target = MultiTarget(request)
-        return base.provider.rx.request(target)
+        return base.provider.rx.request(target, callbackQueue: queue)
     }
 
 }

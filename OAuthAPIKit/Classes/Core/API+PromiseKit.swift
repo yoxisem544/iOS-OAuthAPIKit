@@ -15,7 +15,7 @@ import SwiftyJSON
 extension API.NetworkClient {
 
     public func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
-        return perform(request, on: requestQueue)
+        return perform(request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decodeToJSON()
     }
@@ -27,7 +27,7 @@ extension API.NetworkClient {
 extension API.NetworkClient {
 
     public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
-        return perform(request, on: requestQueue)
+        return perform(request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decode(to: Request.ResponseType.self)
     }
@@ -39,13 +39,13 @@ extension API.NetworkClient {
 extension API.NetworkClient {
 
     public func request<Request: TargetType & MappableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
-        return perform(request, on: requestQueue)
+        return perform(request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decode(to: Request.ResponseType.self)
     }
 
     public func request<Request: TargetType & ImmutableMappableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
-        return perform(request, on: requestQueue)
+        return perform(request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decode(to: Request.ResponseType.self)
     }

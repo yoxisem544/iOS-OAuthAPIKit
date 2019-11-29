@@ -59,10 +59,23 @@ final public class API {
 
 extension API.NetworkClient {
 
-    internal func perform<Request: TargetType>(_ request: Request, on callbackQueue: DispatchQueue) -> Promise<Response> {
+    internal func perform<Request: TargetType>(_ request: Request) -> Promise<Response> {
+        if let retryBahavior = (request as? RetryableRquest)?.retryBehavior {
+            return attempt(retryBahavior, {
+                self.performRequest(request).filterSuccessAndRedirectOrThrowNetworkClientError()
+            })
+        } else {
+            return performRequest(request)
+        }
+    }
+
+    fileprivate func performRequest<Request: TargetType>(_ request: Request) -> Promise<Response> {
         let target = MultiTarget(request)
+        let queue = { () -> DispatchQueue in
+            return request is AuthRequest ? authRequestQueue : self.requestQueue
+        }()
         return Promise { seal in
-            provider.request(target, callbackQueue: callbackQueue, completion: { response in
+            provider.request(target, callbackQueue: queue, completion: { response in
                 switch response {
                 case .success(let r):
                     seal.fulfill(r)

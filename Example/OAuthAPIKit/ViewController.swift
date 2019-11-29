@@ -9,8 +9,11 @@
 import UIKit
 import APIKit
 import PromiseKit
+import RxSwift
 
 class ViewController: UIViewController {
+
+    private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,21 +31,23 @@ class ViewController: UIViewController {
 //                print(e)
 //            })
 
-        API.stubbing().setSuccess(mockData: """
-            {
-                "username": "John",
-                "id": 123,
-            }
-            """.data(using: .utf8)!)
-            .request(SampleReqeust.Ya.GetYA())
-            .done({ user in
+//        API.stubbing().setSuccess(mockData: """
+//            {
+//                "username": "John",
+//                "id": 123,
+//            }
+//            """.data(using: .utf8)!)
+//            .request(SampleReqeust.Auth.RefreshAccessToken())
+//            .done({ user in
+//
+//            })
+//            .catch({ e in
+//
+//            })
 
-            })
-            .catch({ e in
-
-            })
-
-
+//        API.shared.rx.request(SampleReqeust.Auth.RefreshAccessToken())
+//            .subscribe(onSuccess: { json in }, onError: { e in })
+//            .disposed(by: bag)
 
     }
 

@@ -20,7 +20,7 @@ extension SampleReqeust {
     }
 
     struct Auth {
-        struct RefreshAccessToken: SampleRequestType, AuthRequest {
+        struct RefreshAccessToken: SampleRequestType, AuthRequest, RetryableRquest {
             var path: String { "/get" }
             var method: Method { .get }
             var task: Task { .requestParameters(parameters: ["path": "refresh"], encoding: URLEncoding.default) }
