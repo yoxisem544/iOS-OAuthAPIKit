@@ -31,19 +31,19 @@ class ViewController: UIViewController {
 //                print(e)
 //            })
 
-        API.stubbing().setSuccess(mockData: """
-            {
-                "username": "John",
-                "id": 123,
-            }
-            """.data(using: .utf8)!)
-            .request(SampleReqeust.Auth.RefreshAccessToken())
-            .done({ user in
-
-            })
-            .catch({ e in
-
-            })
+//        API.stubbing().setSuccess(mockData: """
+//            {
+//                "username": "John",
+//                "id": 123,
+//            }
+//            """.data(using: .utf8)!)
+//            .request(SampleReqeust.Auth.RefreshAccessToken())
+//            .done({ user in
+//
+//            })
+//            .catch({ e in
+//
+//            })
 
 //        API.shared.rx.request(SampleReqeust.Auth.RefreshAccessToken())
 //            .subscribe(onSuccess: { json in }, onError: { e in })
