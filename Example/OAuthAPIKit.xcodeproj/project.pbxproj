@@ -12,6 +12,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		633F118B239117AA002E581B /* ResponseStatusCodeFilterSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633F118A239117AA002E581B /* ResponseStatusCodeFilterSpecs.swift */; };
 		6368C69D238E754B00828B7D /* SampleRequest+Ya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368C699238E754A00828B7D /* SampleRequest+Ya.swift */; };
 		6368C69E238E754B00828B7D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368C69A238E754A00828B7D /* User.swift */; };
 		6368C6A0238E754B00828B7D /* SampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368C69C238E754B00828B7D /* SampleRequest.swift */; };
@@ -52,6 +53,7 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* OAuthAPIKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OAuthAPIKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		633F118A239117AA002E581B /* ResponseStatusCodeFilterSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseStatusCodeFilterSpecs.swift; sourceTree = "<group>"; };
 		6368C699238E754A00828B7D /* SampleRequest+Ya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SampleRequest+Ya.swift"; sourceTree = "<group>"; };
 		6368C69A238E754A00828B7D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6368C69C238E754B00828B7D /* SampleRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleRequest.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				6368C6A4238E773400828B7D /* RetrySpecs.swift */,
 				6368C6A8238E773500828B7D /* Rx+RepeatBehaviorSpecs.swift */,
 				6368C6A7238E773400828B7D /* TestRequests.swift */,
+				633F118A239117AA002E581B /* ResponseStatusCodeFilterSpecs.swift */,
 				6368C6A3238E773400828B7D /* User.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -436,6 +439,7 @@
 				6368C6C2238E774A00828B7D /* Rx+RepeatBehaviorSpecs.swift in Sources */,
 				6368C6C0238E774A00828B7D /* RetryProfile.swift in Sources */,
 				6368C6C3238E774A00828B7D /* TestRequests.swift in Sources */,
+				633F118B239117AA002E581B /* ResponseStatusCodeFilterSpecs.swift in Sources */,
 				6368C6C4238E774A00828B7D /* User.swift in Sources */,
 				6368C6BE238E774A00828B7D /* RequestGetterSpecs.swift in Sources */,
 				6368C6B9238E774A00828B7D /* DecodingSpecs.swift in Sources */,

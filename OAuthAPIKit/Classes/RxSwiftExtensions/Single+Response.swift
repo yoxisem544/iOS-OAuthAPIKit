@@ -11,7 +11,7 @@ import RxSwift
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 
     /// Filters out responses that don't fall within the given closed range, generating errors when others are encountered.
-    internal func filter<R: RangeExpression>(statusCodes: R) -> Single<ElementType> where R.Bound == Int {
+    internal func filterOrThrowNetworkClientError<R: RangeExpression>(statusCodes: R) -> Single<ElementType> where R.Bound == Int {
         return flatMap { .just(try $0.filterOrThrowNetworkClientError(statusCodes: statusCodes)) }
     }
 

@@ -10,7 +10,7 @@ import Moya
 
 extension Promise where T == Response {
 
-    internal func filter<R: RangeExpression>(statusCodes: R) -> Promise<T> where R.Bound == Int {
+    internal func filteOrThrowNetworkClientErrorr<R: RangeExpression>(statusCodes: R) -> Promise<T> where R.Bound == Int {
         return compactMap({ try $0.filterOrThrowNetworkClientError(statusCodes: statusCodes) })
     }
 
