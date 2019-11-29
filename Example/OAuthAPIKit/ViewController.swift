@@ -9,8 +9,11 @@
 import UIKit
 import APIKit
 import PromiseKit
+import RxSwift
 
 class ViewController: UIViewController {
+
+    private let bag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +37,7 @@ class ViewController: UIViewController {
                 "id": 123,
             }
             """.data(using: .utf8)!)
-            .request(SampleReqeust.Ya.GetYA())
+            .request(SampleReqeust.Auth.RefreshAccessToken())
             .done({ user in
 
             })
@@ -42,7 +45,9 @@ class ViewController: UIViewController {
 
             })
 
-
+        API.shared.rx.request(SampleReqeust.Auth.RefreshAccessToken())
+            .subscribe(onSuccess: { json in }, onError: { e in })
+            .disposed(by: bag)
 
     }
 

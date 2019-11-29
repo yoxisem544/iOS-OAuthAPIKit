@@ -25,7 +25,7 @@ extension API.NetworkClient {
 
     internal func attemptRequest<Request: TargetType & RetryableRquest>(_ retryingRequest: Request) -> Promise<Response> {
         return attempt(retryingRequest.retryBehavior, {
-            self.perform(retryingRequest, on: self.requestQueue).filterSuccessAndRedirectOrThrowNetworkClientError()
+            self.perform(retryingRequest).filterSuccessAndRedirectOrThrowNetworkClientError()
         })
     }
 

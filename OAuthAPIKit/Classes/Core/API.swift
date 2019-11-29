@@ -59,10 +59,13 @@ final public class API {
 
 extension API.NetworkClient {
 
-    internal func perform<Request: TargetType>(_ request: Request, on callbackQueue: DispatchQueue) -> Promise<Response> {
+    internal func perform<Request: TargetType>(_ request: Request) -> Promise<Response> {
         let target = MultiTarget(request)
+        let queue = { () -> DispatchQueue in
+            return request is AuthRequest ? authRequestQueue : self.requestQueue
+        }()
         return Promise { seal in
-            provider.request(target, callbackQueue: callbackQueue, completion: { response in
+            provider.request(target, callbackQueue: queue, completion: { response in
                 switch response {
                 case .success(let r):
                     seal.fulfill(r)
