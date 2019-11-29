@@ -45,9 +45,9 @@ class ViewController: UIViewController {
 
             })
 
-        API.shared.rx.request(SampleReqeust.Auth.RefreshAccessToken())
-            .subscribe(onSuccess: { json in }, onError: { e in })
-            .disposed(by: bag)
+//        API.shared.rx.request(SampleReqeust.Auth.RefreshAccessToken())
+//            .subscribe(onSuccess: { json in }, onError: { e in })
+//            .disposed(by: bag)
 
     }
 

@@ -60,6 +60,16 @@ final public class API {
 extension API.NetworkClient {
 
     internal func perform<Request: TargetType>(_ request: Request) -> Promise<Response> {
+        if let retryBahavior = (request as? RetryableRquest)?.retryBehavior {
+            return attempt(retryBahavior, {
+                self.performRequest(request).filterSuccessAndRedirectOrThrowNetworkClientError()
+            })
+        } else {
+            return performRequest(request)
+        }
+    }
+
+    fileprivate func performRequest<Request: TargetType>(_ request: Request) -> Promise<Response> {
         let target = MultiTarget(request)
         let queue = { () -> DispatchQueue in
             return request is AuthRequest ? authRequestQueue : self.requestQueue
