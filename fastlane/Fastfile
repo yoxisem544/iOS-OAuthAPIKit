@@ -43,4 +43,8 @@ platform :ios do
     )
   end
 
+  lane :spec_pod do
+    sh("pod lib lint ../OAuthAPIKit.podspec --allow-warnings")
+  end
+
 end
