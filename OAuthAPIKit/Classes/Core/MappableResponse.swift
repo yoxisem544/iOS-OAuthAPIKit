@@ -5,13 +5,9 @@
 //  Created by David on 2019/11/20.
 //
 
-import ObjectMapper
+import Mapper
 
-/// Response that can be decoded by `ObjectMapper`
+/// Response that can be decoded by `Mapper`
 public protocol MappableResponse {
     associatedtype ResponseType: Mappable
-}
-
-public protocol ImmutableMappableResponse {
-    associatedtype ResponseType: ImmutableMappable
 }

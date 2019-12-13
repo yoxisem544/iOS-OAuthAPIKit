@@ -11,7 +11,7 @@ import Nimble
 //import APIKit
 import PromiseKit
 import Moya
-import ObjectMapper
+import Mapper
 import RxSwift
 
 @testable import APIKit

@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-import ObjectMapper
+import Mapper
 
 @testable import APIKit
 

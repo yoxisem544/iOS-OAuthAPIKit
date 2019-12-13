@@ -6,7 +6,7 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import ObjectMapper
+import Mapper
 
 public struct Userr {
     let username: String

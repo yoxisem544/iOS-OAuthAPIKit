@@ -6,16 +6,16 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import ObjectMapper
+import Mapper
 
 public struct RetryProfile {
     let info: String
     let username: String
 }
 
-extension RetryProfile: ImmutableMappable {
-    public init(map: Map) throws {
-        self.info = try map.value("data~>info", delimiter: "~>")
-        self.username = try map.value("data~>username", delimiter: "~>")
+extension RetryProfile: Mappable {
+    public init(map: Mapper) throws {
+        self.info = try map.from("data.info")
+        self.username = try map.from("data.username")
     }
 }
