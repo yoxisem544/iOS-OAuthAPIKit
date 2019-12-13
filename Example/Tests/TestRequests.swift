@@ -20,7 +20,7 @@ public struct TestRequest {}
 extension TestRequest {
 
     struct Users {
-        struct GetProfile: TestRequestType, ImmutableMappableResponse {
+        struct GetProfile: TestRequestType, MappableResponse {
             typealias ResponseType = Userr
             
             var path: String { return "get" }
@@ -33,7 +33,7 @@ extension TestRequest {
             }
         }
 
-        struct RetryGetProfile: TestRequestType, ImmutableMappableResponse, RetryableRquest {
+        struct RetryGetProfile: TestRequestType, MappableResponse, RetryableRquest {
             typealias ResponseType = RetryProfile
             
             var retryBehavior: RepeatBehavior { return .delayed(maxCount: 3, time: 0.1) }

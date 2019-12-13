@@ -20,7 +20,7 @@ fileprivate let userMockData = """
 """.data(using: .utf8)!
 
 extension TestRequest.Users {
-    struct SomeRetryingRequest: TestRequestType, RetryableRquest, ImmutableMappableResponse {
+    struct SomeRetryingRequest: TestRequestType, RetryableRquest, MappableResponse {
         typealias ResponseType = Userr
 
         var path: String { return "get" }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RxSwift
 
 /// Thread to separate api call from which will be suspended.
 internal let authRequestQueue = DispatchQueue(label: "io.api.network_client.auth_request_queue")
@@ -17,5 +16,3 @@ internal let decodingQueue = DispatchQueue(
     qos: .userInitiated,
     attributes: .concurrent
 )
-
-internal let decodingScheduler = ConcurrentDispatchQueueScheduler(queue: decodingQueue)

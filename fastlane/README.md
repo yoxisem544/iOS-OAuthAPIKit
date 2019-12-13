@@ -21,6 +21,11 @@ or alternatively using `brew cask install fastlane`
 fastlane ios test
 ```
 Run all test cases of OAuthAPIKit
+### ios spec_pod
+```
+fastlane ios spec_pod
+```
+
 
 ----
 

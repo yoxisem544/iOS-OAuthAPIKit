@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.9.1)
+  - ModelMapper (10.0.0):
+    - ModelMapper/Core (= 10.0.0)
+  - ModelMapper/Core (10.0.0)
   - Moya (13.0.1):
     - Moya/Core (= 13.0.1)
   - Moya/Core (13.0.1):
@@ -9,21 +12,20 @@ PODS:
     - Moya/Core
     - RxSwift (~> 4.0)
   - Nimble (7.3.4)
-  - OAuthAPIKit/Core (3.2.0):
+  - OAuthAPIKit/Core (3.2.4):
     - Alamofire (~> 4.9)
+    - ModelMapper (~> 10.0)
     - Moya (~> 13.0)
-    - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - OAuthAPIKit/RxSwift (3.2.0):
+  - OAuthAPIKit/RxSwift (3.2.4):
     - Alamofire (~> 4.9)
+    - ModelMapper (~> 10.0)
     - Moya (~> 13.0)
     - Moya/RxSwift
     - OAuthAPIKit/Core
-    - ObjectMapper (~> 3.5)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - ObjectMapper (3.5.1)
   - PromiseKit (6.12.0):
     - PromiseKit/CorePromise (= 6.12.0)
     - PromiseKit/Foundation (= 6.12.0)
@@ -61,9 +63,9 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - ModelMapper
     - Moya
     - Nimble
-    - ObjectMapper
     - PromiseKit
     - Quick
     - Result
@@ -79,10 +81,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  ModelMapper: a8dbf2a2003bf626627b9fe7c9a22b3405a30404
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  OAuthAPIKit: 2951ed32c55c6d56e1bfa8c11d21a3aac4a10e08
-  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
+  OAuthAPIKit: 20d700461ecf031c9218b14f2a50c2fb2df9576d
   PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7

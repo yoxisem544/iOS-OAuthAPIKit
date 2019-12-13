@@ -6,7 +6,7 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import ObjectMapper
+import Mapper
 
 struct User {
     var name: String?
@@ -36,9 +36,9 @@ extension User: Decodable {
 //    }
 //}
 
-extension User: ImmutableMappable {
-    init(map: Map) throws {
-        name = try map.value("name")
-        id = try map.value("id")
+extension User: Mappable {
+    init(map: Mapper) throws {
+        name = try map.from("name")
+        id = try map.from("id")
     }
 }

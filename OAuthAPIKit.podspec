@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OAuthAPIKit'
-  s.version          = '3.2.0'
+  s.version          = '4.0.0'
   s.summary          = 'An Elegant OAuth RESTful API framework.'
 
 # This description is used to generate tags and improve search results.
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
   A network abstraction layer that help you to create a type safe network layer.
   With help of Promise and RxSwift to easy handle complex callback and streaming problem.
-  ObjectMapper to help decode JSON to Swift object.
+  Mapper to help decode JSON to Swift object.
   Also, most complex part of OAuth 2.0 is access and refresh token. We've create a easy way for you to manage tokens. This include token refresh, request retry, retry with exponetial behavior and suspending on going requests.
                        DESC
 
@@ -42,7 +42,7 @@ Pod::Spec.new do |s|
     ss.source_files  = "OAuthAPIKit/Classes/Core/**/*"
     s.dependency 'Alamofire', '~> 4.9'
     s.dependency 'Moya', '~> 13.0'
-    s.dependency 'ObjectMapper', '~> 3.5'
+    s.dependency 'ModelMapper', '~> 10.0'
     s.dependency 'PromiseKit', '~> 6.12'
     s.dependency 'SwiftyJSON', '~> 5.0'
   end

@@ -10,7 +10,7 @@ import APIKit
 
 extension SampleReqeust {
     struct Ya {
-        struct GetYA: SampleRequestType, HeaderInjecting, HasAccessToken, RetryableRquest, ImmutableMappableResponse {
+        struct GetYA: SampleRequestType, HeaderInjecting, HasAccessToken, RetryableRquest, MappableResponse {
             typealias ResponseType = User
             
             var path: String { "/get/翁" }

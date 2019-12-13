@@ -7,10 +7,13 @@
 
 import Moya
 
+public typealias HTTPMethod = Moya.Method
+
 /// A base request type if you do not want to use TargetType directly
 /// `BaseRequestType` provides some default value and parameter property.
 public protocol BaseRequestType: TargetType {
     var parameters: [String: Any] { get }
+    var method: HTTPMethod { get }
 }
 
 public extension BaseRequestType {

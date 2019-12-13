@@ -18,7 +18,7 @@ extension Response {
     */
     func filterOrThrowNetworkClientError<R: RangeExpression>(statusCodes: R) throws -> Response where R.Bound == Int {
         do {
-            return try filter(statusCodes: 200...399)
+            return try filter(statusCodes: statusCodes)
         } catch {
             throw API.NetworkClientError.statucCodeError(error: error)
         }
