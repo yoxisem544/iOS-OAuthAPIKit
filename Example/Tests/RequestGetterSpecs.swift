@@ -48,7 +48,7 @@ extension JustATestRequestType {
     var baseURL: URL { return URL(string: "https://google.com")! }
 }
 
-fileprivate struct JustATestRequest: JustATestRequestType, RetryableRquest, ImmutableMappableResponse {
+fileprivate struct JustATestRequest: JustATestRequestType, RetryableRquest, MappableResponse {
     typealias ResponseType = Ya
 
     var path: String { return "dont/even/care/path" }
@@ -57,10 +57,10 @@ fileprivate struct JustATestRequest: JustATestRequestType, RetryableRquest, Immu
     var retryBehavior: RepeatBehavior { return .exponentialDelayed(maxCount: 100, initial: 1, multiplier: 1.01) }
 }
 
-fileprivate struct Ya: ImmutableMappable {
+fileprivate struct Ya: Mappable {
     let name: String
 
-    init(map: Map) throws {
-        name = try map.value("name")
+    init(map: Mapper) throws {
+        name = try map.from("name")
     }
 }

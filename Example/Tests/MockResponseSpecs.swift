@@ -121,55 +121,23 @@ class MockResponseSpecs: QuickSpec {
                             _ = try response.decode(to: SampleMappableObject.self)
                             fail("When encounter a corrupted JSON, you should get an error when decoding")
                         } catch {
-                            if case API.NetworkClientError.decodingError = error {
-                                _ = succeed()
-                            } else {
-                                fail("Error should be decoding error!")
-                            }
-                        }
-                    }
-                }
-
-                context("Decoding to ImmutableMappable") {
-                    it("should successfully decode when json is ok") {
-                        let mockJSON = sampleMappableObjectNormalMockData
-                        let response = Response(statusCode: 200, data: mockJSON)
-                        do {
-                            _ = try response.decode(to: SampleImmutableMappableObject.self)
-                            _ = succeed()
-                        } catch {
-                            fail("should not get a error if json is valid for decoding")
-                        }
-                    }
-
-                    it("should fail to decode if JSON is corrupted.") {
-                        let mockJSON = sampleMappableObjectCorruptMockData
-                        let response = Response(statusCode: 200, data: mockJSON)
-                        do {
-                            _ = try response.decode(to: SampleImmutableMappableObject.self)
-                            fail("When encounter a corrupted JSON, you should get an error when decoding")
-                        } catch {
-                            if case API.NetworkClientError.decodingError = error {
-                                _ = succeed()
-                            } else {
-                                fail("Error should be decoding error!")
-                            }
-                        }
-                    }
-
-                    it("should fail to decode if age is incorrect.") {
-                        let mockJSON = sampleMappableObjectIncorrectAgeMockData
-                        let response = Response(statusCode: 200, data: mockJSON)
-                        do {
-                            _ = try response.decode(to: SampleImmutableMappableObject.self)
-                            fail("When encounter a corrupted JSON, you should get an error when decoding")
-                        } catch {
                             if case API.NetworkClientError.decodingError(error: let e) = error {
-                                if let e = e as? ObjectMapper.MapError {
-                                    expect(e.key).to(equal("age")) // age should be Int but get String instead
-                                    expect(e.currentValue).to(beAKindOf(String.self))
+                                if case MoyaError.underlying(let uuu, _) = e {
+                                    if let underlyingError = uuu as? MapperError {
+                                        switch underlyingError {
+                                        case .convertibleError(value: let value, type: let type):
+                                            _ = succeed()
+                                        default:
+                                            fail("should only be convertible error")
+                                        }
+                                    } else {
+                                        fail("should be a Mapper underlying error")
+                                    }
+
+//                                    expect(e.key).to(equal("age")) // age should be Int but get String instead
+//                                    expect(e.currentValue).to(beAKindOf(String.self))
                                 } else {
-                                    fail("should get an ObjectMapper MapError struct here")
+                                    fail("should get an Moya underlying error here")
                                 }
                             } else {
                                 fail("Error should be decoding error!")
@@ -271,7 +239,7 @@ class MockResponseSpecs: QuickSpec {
                     let response = Response(statusCode: 200, data: mockJSON)
                     waitUntil(timeout: 3, action: { done in
                         Promise.value(response)
-                            .decode(to: SampleImmutableMappableObject.self)
+                            .decode(to: SampleMappableObject.self)
                             .done({ json in
                                 _ = succeed()
                                 done()
@@ -344,7 +312,7 @@ class MockResponseSpecs: QuickSpec {
 
                     waitUntil(timeout: 3, action: { done in
                         Single.just(response)
-                            .decode(to: SampleImmutableMappableObject.self)
+                            .decode(to: SampleMappableObject.self)
                             .subscribe(onSuccess: { json in
                                 _ = succeed()
                                 done()
@@ -403,31 +371,14 @@ fileprivate let sampleMappableObjectIncorrectAgeMockData = """
 """.data(using: .utf8)!
 
 fileprivate struct SampleMappableObject: Mappable {
-    var name: String?
-    var id: String?
-    var age: Int = 0
-
-    init?(map: Map) {
-        guard let age = map.JSON["age"] as? Int else { return nil } // user must have a age
-        guard age > 0 else { return nil } // fail when age is smaller than 0
-    }
-
-    mutating func mapping(map: Map) {
-        name <- map["name"]
-        id <- map["id"]
-        age <- map["age"]
-    }
-}
-
-fileprivate struct SampleImmutableMappableObject: ImmutableMappable {
     let name: String
     let id: String
     let age: Int
 
-    init(map: Map) throws {
-        name = try map.value("name")
-        id = try map.value("id")
-        age = try map.value("age")
+    init(map: Mapper) throws {
+        name = try map.from("name")
+        id = try map.from("id")
+        age = try map.from("age")
     }
 }
 
