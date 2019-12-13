@@ -7,7 +7,7 @@
 
 import PromiseKit
 import Moya
-import ObjectMapper
+import Mapper
 import SwiftyJSON
 
 extension Response {
@@ -38,14 +38,6 @@ extension Response {
 
     internal func decode<ResponseType: Mappable>(to type: ResponseType.Type) throws -> ResponseType {
         do {
-            return try self.map(type)
-        } catch {
-            throw API.NetworkClientError.decodingError(error: error)
-        }
-    }
-
-    internal func decode<ResponseType: ImmutableMappable>(to type: ResponseType.Type) throws -> ResponseType {
-         do {
             return try self.map(type)
         } catch {
             throw API.NetworkClientError.decodingError(error: error)

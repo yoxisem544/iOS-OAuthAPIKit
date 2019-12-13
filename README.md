@@ -2,6 +2,7 @@
 
 [![CI Status](https://img.shields.io/travis/yoxisem544/iOS-OAuthAPIKit.svg?style=flat)](https://travis-ci.org/yoxisem544/iOS-OAuthAPIKit)
 [![codecov](https://codecov.io/gh/yoxisem544/iOS-OAuthAPIKit/branch/master/graph/badge.svg)](https://codecov.io/gh/yoxisem544/iOS-OAuthAPIKit)
+[![codebeat badge](https://codebeat.co/badges/2b05132f-45c3-48c3-9877-d70964d21329)](https://codebeat.co/projects/github-com-yoxisem544-ios-oauthapikit-develop)
 [![Version](https://img.shields.io/cocoapods/v/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
 [![License](https://img.shields.io/cocoapods/l/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)
 [![Platform](https://img.shields.io/cocoapods/p/OAuthAPIKit.svg?style=flat)](https://cocoapods.org/pods/OAuthAPIKit)

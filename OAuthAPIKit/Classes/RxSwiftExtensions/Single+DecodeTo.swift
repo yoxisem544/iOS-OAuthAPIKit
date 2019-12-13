@@ -5,7 +5,7 @@
 //  Created by David on 2019/11/22.
 //
 
-import ObjectMapper
+import Mapper
 import Moya
 import RxSwift
 import SwiftyJSON
@@ -25,14 +25,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             return .just(try response.decode(to: type))
         })
     }
-
-    internal func decode<T: ImmutableMappable>(to type: T.Type) -> Single<T> {
-        return observeOn(decodingScheduler)
-        .flatMap({ response -> Single<T> in
-            return .just(try response.decode(to: type))
-        })
-    }
-
+    
     internal func decode<T: Decodable>(to type: T.Type) -> Single<T> {
         return observeOn(decodingScheduler)
         .flatMap({ response -> Single<T> in

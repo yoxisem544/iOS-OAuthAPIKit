@@ -6,16 +6,16 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import ObjectMapper
+import Mapper
 
 public struct Userr {
     let username: String
     let userID: String
 }
 
-extension Userr: ImmutableMappable {
-    public init(map: Map) throws {
-        username = try map.value("username")
-        userID = try map.value("user_id")
+extension Userr: Mappable {
+    public init(map: Mapper) throws {
+        username = try map.from("username")
+        userID = try map.from("user_id")
     }
 }

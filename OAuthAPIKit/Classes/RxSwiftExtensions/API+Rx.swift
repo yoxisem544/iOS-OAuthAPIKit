@@ -69,11 +69,5 @@ extension Reactive where Base == API.NetworkClient {
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decode(to: Request.ResponseType.self)
     }
-
-    public func request<Request: TargetType & ImmutableMappableResponse>(_ request: Request) -> Single<Request.ResponseType> {
-        return performRequest(of: request)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
-    }
-
+    
 }
