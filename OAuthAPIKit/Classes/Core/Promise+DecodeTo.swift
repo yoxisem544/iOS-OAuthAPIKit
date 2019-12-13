@@ -12,8 +12,8 @@ import SwiftyJSON
 
 extension Promise where T == Response {
 
-    internal func decode<R: Mappable>(to type: R.Type) -> Promise<R> {
-        return then(on: decodingQueue, { response -> Promise<R> in
+    internal func decode<ResponseType: Mappable>(to type: ResponseType.Type) -> Promise<ResponseType> {
+        return then(on: decodingQueue, { response -> Promise<ResponseType> in
             return .value(try response.decode(to: type))
         })
     }
@@ -22,8 +22,8 @@ extension Promise where T == Response {
 
 extension Promise where T == Response {
 
-    internal func decode<R: Decodable>(to type: R.Type) -> Promise<R> {
-        return then(on: decodingQueue, { response -> Promise<R> in
+    internal func decode<ResponseType: Decodable>(to type: ResponseType.Type) -> Promise<ResponseType> {
+        return then(on: decodingQueue, { response -> Promise<ResponseType> in
             return .value(try response.decode(to: type))
         })
     }
