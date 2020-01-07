@@ -1,8 +1,10 @@
 use_frameworks!
 
 target 'OAuthAPIKit_Example' do
-  # pod 'OAuthAPIKit', :path => '../'
-  pod 'OAuthAPIKit/RxSwift', :path => '../'
+#   pod 'OAuthAPIKit', :path => '../'
+#   pod 'OAuthAPIKit/Mapper', :path => '../'
+  # pod 'OAuthAPIKit/RxSwift', :path => '../'
+   pod 'OAuthAPIKit/RxSwift+Mapper', :path => '../'
 
   target 'OAuthAPIKit_Tests' do
     inherit! :search_paths
