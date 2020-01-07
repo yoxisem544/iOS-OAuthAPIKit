@@ -18,8 +18,30 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 OAuthAPIKit is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
+Simple without any dependency:
+
 ```ruby
 pod 'OAuthAPIKit'
+```
+
+Or with RxSwift:
+
+```ruby
+pod 'OAuthAPIKit/RxSwift'
+```
+
+Or if you like to use Mapper to help for JSON decoding:
+
+```ruby
+pod 'OAuthAPIKit/Mapper'
+```
+
+Or RxSwift and Mapper together:
+
+Or with RxSwift:
+
+```ruby
+pod 'OAuthAPIKit/RxSwift+Mapper'
 ```
 
 ## Author
