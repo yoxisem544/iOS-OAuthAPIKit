@@ -26,7 +26,7 @@ extension Reactive where Base == API.NetworkClient {
         }
     }
 
-    private func performRequest<Request: TargetType>(of request: Request) -> Single<Response> {
+    internal func performRequest<Request: TargetType>(of request: Request) -> Single<Response> {
         let queue = { () -> DispatchQueue in
             return request is AuthRequest ? authRequestQueue : self.base.requestQueue
         }()
@@ -60,14 +60,3 @@ extension Reactive where Base == API.NetworkClient {
 
 }
 
-// MARK: - MappableResponse + RxSwift
-
-extension Reactive where Base == API.NetworkClient {
-
-    public func request<Request: TargetType & MappableResponse>(_ request: Request) -> Single<Request.ResponseType> {
-        return performRequest(of: request)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
-    }
-    
-}

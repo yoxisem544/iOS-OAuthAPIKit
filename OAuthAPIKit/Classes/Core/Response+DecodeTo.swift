@@ -5,9 +5,7 @@
 //  Created by David on 2019/11/25.
 //
 
-import PromiseKit
 import Moya
-import Mapper
 import SwiftyJSON
 
 extension Response {
@@ -25,18 +23,6 @@ extension Response {
 extension Response {
 
     internal func decode<ResponseType: Decodable>(to type: ResponseType.Type) throws -> ResponseType {
-        do {
-            return try self.map(type)
-        } catch {
-            throw API.NetworkClientError.decodingError(error: error)
-        }
-    }
-
-}
-
-extension Response {
-
-    internal func decode<ResponseType: Mappable>(to type: ResponseType.Type) throws -> ResponseType {
         do {
             return try self.map(type)
         } catch {

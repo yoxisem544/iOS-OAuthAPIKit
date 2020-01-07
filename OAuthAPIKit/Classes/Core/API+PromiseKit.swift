@@ -7,7 +7,6 @@
 
 import Moya
 import PromiseKit
-import Mapper
 import SwiftyJSON
 
 // MARK: - General Decoding with SwiftyJSON
@@ -27,18 +26,6 @@ extension API.NetworkClient {
 extension API.NetworkClient {
 
     public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
-        return perform(request)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
-    }
-
-}
-
-// MARK: - For Mapper
-
-extension API.NetworkClient {
-
-    public func request<Request: TargetType & MappableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
         return perform(request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
             .decode(to: Request.ResponseType.self)

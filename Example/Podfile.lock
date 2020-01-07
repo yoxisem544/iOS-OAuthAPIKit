@@ -12,18 +12,34 @@ PODS:
     - Moya/Core
     - RxSwift (~> 4.0)
   - Nimble (7.3.4)
-  - OAuthAPIKit/Core (3.2.4):
+  - OAuthAPIKit/Core (4.0.0):
     - Alamofire (~> 4.9)
     - ModelMapper (~> 10.0)
     - Moya (~> 13.0)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - OAuthAPIKit/RxSwift (3.2.4):
+  - OAuthAPIKit/Mapper (4.0.0):
+    - Alamofire (~> 4.9)
+    - ModelMapper (~> 10.0)
+    - Moya (~> 13.0)
+    - OAuthAPIKit/Core
+    - PromiseKit (~> 6.12)
+    - SwiftyJSON (~> 5.0)
+  - OAuthAPIKit/RxSwift (4.0.0):
     - Alamofire (~> 4.9)
     - ModelMapper (~> 10.0)
     - Moya (~> 13.0)
     - Moya/RxSwift
     - OAuthAPIKit/Core
+    - PromiseKit (~> 6.12)
+    - SwiftyJSON (~> 5.0)
+  - "OAuthAPIKit/RxSwift+Mapper (4.0.0)":
+    - Alamofire (~> 4.9)
+    - ModelMapper (~> 10.0)
+    - Moya (~> 13.0)
+    - OAuthAPIKit/Core
+    - OAuthAPIKit/Mapper
+    - OAuthAPIKit/RxSwift
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
   - PromiseKit (6.12.0):
@@ -54,7 +70,7 @@ PODS:
 
 DEPENDENCIES:
   - Nimble (~> 7.0)
-  - OAuthAPIKit/RxSwift (from `../`)
+  - "OAuthAPIKit/RxSwift+Mapper (from `../`)"
   - Quick (~> 2.0)
   - RxBlocking (~> 4.0)
   - RxNimble (~> 4.0)
@@ -84,7 +100,7 @@ SPEC CHECKSUMS:
   ModelMapper: a8dbf2a2003bf626627b9fe7c9a22b3405a30404
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  OAuthAPIKit: 20d700461ecf031c9218b14f2a50c2fb2df9576d
+  OAuthAPIKit: 8ac2762f96719ff4d91ddd441612a3e45aa0ebb9
   PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
@@ -94,6 +110,6 @@ SPEC CHECKSUMS:
   RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: a5faece8f42ced8c8efcee231ffd06891a69c1af
+PODFILE CHECKSUM: fc02c4709e1b619276378d5521989919856008ac
 
 COCOAPODS: 1.8.4

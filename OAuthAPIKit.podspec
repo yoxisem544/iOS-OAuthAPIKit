@@ -47,9 +47,23 @@ Pod::Spec.new do |s|
     s.dependency 'SwiftyJSON', '~> 5.0'
   end
 
+  s.subspec "Mapper" do |ss|
+    ss.source_files = "OAuthAPIKit/Classes/Mapper/**/*"
+    ss.dependency "OAuthAPIKit/Core"
+    ss.dependency 'ModelMapper', '~> 10.0'
+  end
+
   s.subspec "RxSwift" do |ss|
     ss.source_files = "OAuthAPIKit/Classes/RxSwiftExtensions/**/*"
     ss.dependency "OAuthAPIKit/Core"
     ss.dependency "Moya/RxSwift"
   end
+
+  s.subspec "RxSwift+Mapper" do |ss|
+    ss.source_files = "OAuthAPIKit/Classes/RxSwift+Mapper/**/*"
+    ss.dependency "OAuthAPIKit/Core"
+    ss.dependency "OAuthAPIKit/Mapper"
+    ss.dependency "OAuthAPIKit/RxSwift"
+  end
+
 end
