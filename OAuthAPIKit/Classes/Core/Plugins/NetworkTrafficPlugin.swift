@@ -9,7 +9,6 @@
 import Foundation
 import Moya
 import SwiftyJSON
-import Result
 
 public class NetworkTrafficPlugin: PluginType {
 
