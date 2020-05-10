@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OAuthAPIKit'
-  s.version          = '4.1.1'
+  s.version          = '5.0.0'
   s.summary          = 'An Elegant OAuth RESTful API framework.'
 
 # This description is used to generate tags and improve search results.
@@ -40,8 +40,8 @@ Pod::Spec.new do |s|
   s.subspec "Core" do |ss|
     ss.framework  = "Foundation"
     ss.source_files  = "OAuthAPIKit/Classes/Core/**/*"
-    s.dependency 'Alamofire', '~> 4.9'
-    s.dependency 'Moya', '~> 13.0'
+    s.dependency 'Alamofire', '~> 5.0'
+    s.dependency 'Moya', '~> 14.0'
     s.dependency 'ModelMapper', '~> 10.0'
     s.dependency 'PromiseKit', '~> 6.12'
     s.dependency 'SwiftyJSON', '~> 5.0'
