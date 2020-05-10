@@ -7,7 +7,6 @@
 //
 
 import APIKit
-import Moya
 
 public protocol TestRequestType: BaseRequestType {}
 

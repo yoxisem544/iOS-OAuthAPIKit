@@ -8,7 +8,6 @@
 
 import Foundation
 import Moya
-import Result
 import SwiftyJSON
 
 public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
