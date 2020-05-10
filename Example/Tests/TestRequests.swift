@@ -7,7 +7,6 @@
 //
 
 import APIKit
-import Moya
 
 public protocol TestRequestType: BaseRequestType {}
 
@@ -24,7 +23,7 @@ extension TestRequest {
             typealias ResponseType = Userr
             
             var path: String { return "get" }
-            var method: APIKit.Method { return .get }
+            var method: Method { return .get }
             var task: Task { return .requestPlain }
 
             let userID: String
@@ -38,7 +37,7 @@ extension TestRequest {
             
             var retryBehavior: RepeatBehavior { return .delayed(maxCount: 3, time: 0.1) }
             var path: String { return "post22" }
-            var method: APIKit.Method { return .post }
+            var method: Method { return .post }
             var parameters: [String : Any] {
                 return [
                     "info": "yo info",
