@@ -1,80 +1,78 @@
 PODS:
-  - Alamofire (4.9.1)
+  - Alamofire (5.1.0)
   - ModelMapper (10.0.0):
     - ModelMapper/Core (= 10.0.0)
   - ModelMapper/Core (10.0.0)
-  - Moya (13.0.1):
-    - Moya/Core (= 13.0.1)
-  - Moya/Core (13.0.1):
-    - Alamofire (~> 4.1)
-    - Result (~> 4.1)
-  - Moya/RxSwift (13.0.1):
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
     - Moya/Core
-    - RxSwift (~> 4.0)
+    - RxSwift (~> 5.0)
   - Nimble (7.3.4)
-  - OAuthAPIKit/Core (4.0.0):
-    - Alamofire (~> 4.9)
+  - OAuthAPIKit/Core (5.0.0):
+    - Alamofire (~> 5.0)
     - ModelMapper (~> 10.0)
-    - Moya (~> 13.0)
+    - Moya (~> 14.0)
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - OAuthAPIKit/Mapper (4.0.0):
-    - Alamofire (~> 4.9)
+  - OAuthAPIKit/Mapper (5.0.0):
+    - Alamofire (~> 5.0)
     - ModelMapper (~> 10.0)
-    - Moya (~> 13.0)
+    - Moya (~> 14.0)
     - OAuthAPIKit/Core
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - OAuthAPIKit/RxSwift (4.0.0):
-    - Alamofire (~> 4.9)
+  - OAuthAPIKit/RxSwift (5.0.0):
+    - Alamofire (~> 5.0)
     - ModelMapper (~> 10.0)
-    - Moya (~> 13.0)
+    - Moya (~> 14.0)
     - Moya/RxSwift
     - OAuthAPIKit/Core
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - "OAuthAPIKit/RxSwift+Mapper (4.0.0)":
-    - Alamofire (~> 4.9)
+  - "OAuthAPIKit/RxSwift+Mapper (5.0.0)":
+    - Alamofire (~> 5.0)
     - ModelMapper (~> 10.0)
-    - Moya (~> 13.0)
+    - Moya (~> 14.0)
     - OAuthAPIKit/Core
     - OAuthAPIKit/Mapper
     - OAuthAPIKit/RxSwift
     - PromiseKit (~> 6.12)
     - SwiftyJSON (~> 5.0)
-  - PromiseKit (6.12.0):
-    - PromiseKit/CorePromise (= 6.12.0)
-    - PromiseKit/Foundation (= 6.12.0)
-    - PromiseKit/UIKit (= 6.12.0)
-  - PromiseKit/CorePromise (6.12.0)
-  - PromiseKit/Foundation (6.12.0):
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.12.0):
+  - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
   - Quick (2.2.0)
-  - Result (4.1.0)
-  - RxBlocking (4.5.0):
-    - RxSwift (>= 4.4.2, ~> 4.4)
-  - RxNimble (4.4.0):
-    - RxNimble/RxBlocking (= 4.4.0)
-  - RxNimble/Core (4.4.0):
+  - RxBlocking (5.1.1):
+    - RxSwift (~> 5)
+  - RxNimble (4.5.0):
+    - RxNimble/RxBlocking (= 4.5.0)
+  - RxNimble/Core (4.5.0):
     - Nimble (~> 7.0)
-    - RxSwift (~> 4.2)
-  - RxNimble/RxBlocking (4.4.0):
+    - RxSwift (~> 5.0)
+  - RxNimble/RxBlocking (4.5.0):
     - RxBlocking
     - RxNimble/Core
-  - RxSwift (4.5.0)
-  - RxTest (4.5.0):
-    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (5.1.1)
+  - RxTest (5.1.1):
+    - RxSwift (~> 5)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Nimble (~> 7.0)
   - "OAuthAPIKit/RxSwift+Mapper (from `../`)"
   - Quick (~> 2.0)
-  - RxBlocking (~> 4.0)
-  - RxNimble (~> 4.0)
-  - RxTest (~> 4.0)
+  - RxBlocking
+  - RxNimble
+  - RxTest
 
 SPEC REPOS:
   trunk:
@@ -84,7 +82,6 @@ SPEC REPOS:
     - Nimble
     - PromiseKit
     - Quick
-    - Result
     - RxBlocking
     - RxNimble
     - RxSwift
@@ -96,20 +93,19 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   ModelMapper: a8dbf2a2003bf626627b9fe7c9a22b3405a30404
-  Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  OAuthAPIKit: 8ac2762f96719ff4d91ddd441612a3e45aa0ebb9
-  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
+  OAuthAPIKit: 2a25ae247448211f827a71852f643df8c91d3033
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
-  RxBlocking: 79413e4d916f44bb3e113c5b2cc059e36fe58910
-  RxNimble: ba6caf0195c37fd50dd4b967624b66ff580d781a
-  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
-  RxTest: 3ccb66bfbace0bf7df1c43a7c75d046f8ce60372
+  RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
+  RxNimble: 7de04a30b74ac4c9298ae819edbfbddc34abe7fc
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  RxTest: 711632d5644dffbeb62c936a521b5b008a1e1faa
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: fc02c4709e1b619276378d5521989919856008ac
+PODFILE CHECKSUM: 5dbce804fbb03e1f2e3ef8aace4cf74d51f8314f
 
 COCOAPODS: 1.8.4
