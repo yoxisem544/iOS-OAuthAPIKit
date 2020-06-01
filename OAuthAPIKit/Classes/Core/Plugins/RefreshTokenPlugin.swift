@@ -10,7 +10,7 @@ import Foundation
 import Moya
 import SwiftyJSON
 
-public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
+public class RefreshTokenPlugin<Target: TargetType & NonBlockableRequest>: PluginType {
 
     // MARK: - Properties
 
@@ -54,7 +54,7 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
     // MARK: - To check token valid time before sending requests
     
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
-        guard !(target is AuthRequest) else { return request } // ignore auth request
+        guard !(target is NonBlockableRequest) else { return request } // ignore auth request
 
         if checkRefreshTokenValidLengthClosure() {
             performRefresh()
@@ -66,7 +66,7 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
     // MARK: - When receive 403 or 401 unauthurized error code
 
     public func didReceive(_ result: Result<Response, MoyaError>, target: TargetType) {
-        guard !(target is AuthRequest) else { return } // ignore auth request
+        guard !(target is NonBlockableRequest) else { return } // ignore auth request
 
         switch result {
         case .success(let response):
@@ -104,7 +104,11 @@ public class RefreshTokenPlugin<Target: TargetType & AuthRequest>: PluginType {
                 // 4. always release blocked request queue
                 .ensure({ self.isRefreshing = false })
                 // 5. handle error if refresh failed, if request has failed, should log out user
-                .catch({ e in self.failToRefreshClosure(e) })
+                .catch({ e in
+                    self.failToRefreshClosure(e)
+                    // 6. if refresh failed, api queue will be released again
+                    self.networkClientRef?.releaseRequestQueue()
+                })
         }
     }
 

@@ -72,7 +72,7 @@ extension API.NetworkClient {
     fileprivate func performRequest<Request: TargetType>(_ request: Request) -> Promise<Response> {
         let target = MultiTarget(request)
         let queue = { () -> DispatchQueue in
-            return request is AuthRequest ? authRequestQueue : self.requestQueue
+            return request is NonBlockableRequest ? nonBlockingRequestQueue : self.requestQueue
         }()
         return Promise { seal in
             provider.request(target, callbackQueue: queue, completion: { response in

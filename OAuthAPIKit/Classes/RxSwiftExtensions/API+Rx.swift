@@ -28,7 +28,7 @@ extension Reactive where Base == API.NetworkClient {
 
     internal func performRequest<Request: TargetType>(of request: Request) -> Single<Response> {
         let queue = { () -> DispatchQueue in
-            return request is AuthRequest ? authRequestQueue : self.base.requestQueue
+            return request is NonBlockableRequest ? nonBlockingRequestQueue : self.base.requestQueue
         }()
         let target = MultiTarget(request)
         return base.provider.rx.request(target, callbackQueue: queue)
