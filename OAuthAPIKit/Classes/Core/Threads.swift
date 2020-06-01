@@ -8,7 +8,7 @@
 import Foundation
 
 /// Thread to separate api call from which will be suspended.
-internal let authRequestQueue = DispatchQueue(label: "io.api.network_client.auth_request_queue")
+internal let nonBlockingRequestQueue = DispatchQueue(label: "io.api.network_client.nonblocking_request_queue")
 
 /// Thread for decoding
 internal let decodingQueue = DispatchQueue(
