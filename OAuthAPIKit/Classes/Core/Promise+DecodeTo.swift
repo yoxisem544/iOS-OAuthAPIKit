@@ -11,9 +11,9 @@ import SwiftyJSON
 
 extension Promise where T == Response {
 
-    internal func decode<ResponseType: Decodable>(to type: ResponseType.Type) -> Promise<ResponseType> {
+    internal func decode<ResponseType: Decodable>(to type: ResponseType.Type, using decoder: JSONDecoder = .init()) -> Promise<ResponseType> {
         return then(on: decodingQueue, { response -> Promise<ResponseType> in
-            return .value(try response.decode(to: type))
+            return .value(try response.decode(to: type, using: decoder))
         })
     }
 

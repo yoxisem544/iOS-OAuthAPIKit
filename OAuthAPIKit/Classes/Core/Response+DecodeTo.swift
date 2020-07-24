@@ -22,9 +22,9 @@ extension Response {
 
 extension Response {
 
-    internal func decode<ResponseType: Decodable>(to type: ResponseType.Type) throws -> ResponseType {
+    internal func decode<ResponseType: Decodable>(to type: ResponseType.Type, using decoder: JSONDecoder = .init()) throws -> ResponseType {
         do {
-            return try self.map(type)
+            return try self.map(type, using: decoder)
         } catch {
             throw API.NetworkClientError.decodingError(error: error)
         }

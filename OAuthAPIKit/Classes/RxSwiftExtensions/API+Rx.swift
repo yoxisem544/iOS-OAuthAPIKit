@@ -55,7 +55,7 @@ extension Reactive where Base == API.NetworkClient {
     public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Single<Request.ResponseType> {
         return performRequest(of: request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
+            .decode(to: Request.ResponseType.self, using: base.jsonDecoder)
     }
 
 }

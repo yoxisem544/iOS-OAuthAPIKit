@@ -28,7 +28,7 @@ extension API.NetworkClient {
     public func request<Request: TargetType & DecodableResponse>(_ request: Request) -> Promise<Request.ResponseType> {
         return perform(request)
             .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decode(to: Request.ResponseType.self)
+            .decode(to: Request.ResponseType.self, using: jsonDecoder)
     }
 
 }

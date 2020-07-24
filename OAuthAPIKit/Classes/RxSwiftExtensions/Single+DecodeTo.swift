@@ -18,10 +18,10 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
         })
     }
     
-    internal func decode<T: Decodable>(to type: T.Type) -> Single<T> {
+    internal func decode<T: Decodable>(to type: T.Type, using decoder: JSONDecoder = .init()) -> Single<T> {
         return observeOn(decodingScheduler)
         .flatMap({ response -> Single<T> in
-            return .just(try response.decode(to: type))
+            return .just(try response.decode(to: type, using: decoder))
         })
     }
 

@@ -24,12 +24,15 @@ final public class API {
 
     public struct NetworkClient {
 
+        public var jsonDecoder = JSONDecoder()
+
         // MARK: - Property
         internal let requestQueue = DispatchQueue(label: "io.api.network_client.request_queue")
 
         // MARK: Initialization
-        public init(provider: MoyaProvider<MultiTarget>) {
+        public init(provider: MoyaProvider<MultiTarget>, jsonDecoder: JSONDecoder = .init()) {
             self.provider = provider
+            self.jsonDecoder = jsonDecoder
         }
         let provider: MoyaProvider<MultiTarget>
 
