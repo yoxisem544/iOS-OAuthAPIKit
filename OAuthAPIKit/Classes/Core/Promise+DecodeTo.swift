@@ -21,7 +21,7 @@ extension Promise where T == Response {
 
 extension Promise where T == Response {
 
-    internal func decodeToJSON() -> Promise<JSON> {
+    public func decodeToJSON() -> Promise<JSON> {
         return then(on: decodingQueue, { response -> Promise<JSON> in
             return .value(try response.decodeToJSON())
         })

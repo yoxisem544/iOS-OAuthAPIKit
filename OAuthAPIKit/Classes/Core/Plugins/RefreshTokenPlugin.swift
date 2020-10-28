@@ -96,6 +96,7 @@ public class RefreshTokenPlugin<Target: TargetType & NonBlockableRequest>: Plugi
             isRefreshing = true
             // 2. refresh access token
             networkClientRef?.request(refreshRequest)
+                .decodeToJSON()
                 // 3. store response to credential manager
                 .done({ json in
                     self.lastRefreshTime = Date()

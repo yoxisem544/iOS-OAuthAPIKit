@@ -10,7 +10,7 @@ import SwiftyJSON
 
 extension Response {
 
-    internal func decodeToJSON() throws -> JSON {
+    public func decodeToJSON() throws -> JSON {
         do {
             return try JSON(data: self.data)
         } catch {

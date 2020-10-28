@@ -13,10 +13,12 @@ import SwiftyJSON
 
 extension API.NetworkClient {
 
-    public func request<Request: TargetType>(_ request: Request) -> Promise<JSON> {
+    public func request<Request: TargetType>(_ request: Request) -> Promise<Response> {
+        return perform(request).filterSuccessAndRedirectOrThrowNetworkClientError()
+    }
+
+    public func requestWithFilteringStatusCode<Request: TargetType>(_ request: Request) -> Promise<Response> {
         return perform(request)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decodeToJSON()
     }
 
 }
