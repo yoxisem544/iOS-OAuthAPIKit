@@ -11,7 +11,7 @@ import SwiftyJSON
 
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 
-    internal func decodeToJSON() -> Single<JSON> {
+    public func decodeToJSON() -> Single<JSON> {
         return observeOn(decodingScheduler)
         .flatMap({ response -> Single<JSON> in
             return .just(try response.decodeToJSON())

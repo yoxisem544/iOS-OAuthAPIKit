@@ -40,10 +40,8 @@ extension Reactive where Base == API.NetworkClient {
 
 extension Reactive where Base == API.NetworkClient {
 
-    public func request<Request: TargetType>(_ request: Request) -> Single<JSON> {
-        return performRequest(of: request)
-            .filterSuccessAndRedirectOrThrowNetworkClientError()
-            .decodeToJSON()
+    public func request<Request: TargetType>(_ request: Request) -> Single<Response> {
+        return performRequest(of: request).filterSuccessAndRedirectOrThrowNetworkClientError()
     }
 
 }
