@@ -44,6 +44,10 @@ extension Reactive where Base == API.NetworkClient {
         return performRequest(of: request).filterSuccessAndRedirectOrThrowNetworkClientError()
     }
 
+    public func requestWithFilteringStatusCode<Request: TargetType>(_ request: Request) -> Single<Response> {
+        return performRequest(of: request)
+    }
+
 }
 
 // MARK: - DecodableResponse + RxSwift

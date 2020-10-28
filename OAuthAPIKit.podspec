@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OAuthAPIKit'
-  s.version          = '5.1.3'
+  s.version          = '5.1.4'
   s.summary          = 'An Elegant OAuth RESTful API framework.'
 
 # This description is used to generate tags and improve search results.
